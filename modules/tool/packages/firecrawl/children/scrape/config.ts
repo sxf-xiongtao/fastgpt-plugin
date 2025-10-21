@@ -4,53 +4,97 @@ import { FlowNodeInputTypeEnum, WorkflowIOValueTypeEnum } from '@tool/type/fastg
 export default defineTool({
   name: {
     'zh-CN': '抓取网页内容',
-    en: 'Scrape web content'
+    en: 'Web crawling'
   },
   description: {
     'zh-CN': '从任何网站抓取干净的数据。',
-    en: 'Scrape clean data from any website.'
+    en: 'Crawls clean content from any website.'
   },
   courseUrl: 'https://www.firecrawl.dev/',
-  versionList: [
-    {
-      value: '0.1.0',
-      description: 'Default version',
-      inputs: [
-        {
-          key: 'url',
-          label: 'Url',
-          renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input],
-          valueType: WorkflowIOValueTypeEnum.string,
-          required: true,
-          toolDescription: 'The URL of the webpage to scrape'
-        },
-        {
-          key: 'format',
-          label: '返回格式',
-          renderTypeList: [FlowNodeInputTypeEnum.select],
-          valueType: WorkflowIOValueTypeEnum.string,
-          required: true,
-          list: [
-            { label: 'Markdown', value: 'markdown' },
-            { label: 'HTML', value: 'html' }
-          ],
-          defaultValue: 'markdown'
-        },
-        {
-          key: 'faster',
-          label: '快速模式',
-          renderTypeList: [FlowNodeInputTypeEnum.switch],
-          valueType: WorkflowIOValueTypeEnum.boolean,
-          defaultValue: true
-        }
-      ],
-      outputs: [
-        {
-          valueType: WorkflowIOValueTypeEnum.string,
-          key: 'result',
-          label: '抓取结果'
-        }
-      ]
-    }
-  ]
+  versionList: {
+    'zh-CN': [
+      {
+        value: '0.1.0',
+        description: 'Default version',
+        inputs: [
+          {
+            key: 'url',
+            label: 'Url',
+            renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input],
+            valueType: WorkflowIOValueTypeEnum.string,
+            required: true,
+            toolDescription: 'The URL of the webpage to scrape'
+          },
+          {
+            key: 'format',
+            label: '返回格式',
+            renderTypeList: [FlowNodeInputTypeEnum.select],
+            valueType: WorkflowIOValueTypeEnum.string,
+            required: true,
+            list: [
+              { label: 'Markdown', value: 'markdown' },
+              { label: 'HTML', value: 'html' }
+            ],
+            defaultValue: 'markdown'
+          },
+          {
+            key: 'faster',
+            label: '快速模式',
+            renderTypeList: [FlowNodeInputTypeEnum.switch],
+            valueType: WorkflowIOValueTypeEnum.boolean,
+            defaultValue: true
+          }
+        ],
+        outputs: [
+          {
+            valueType: WorkflowIOValueTypeEnum.string,
+            key: 'result',
+            label: '抓取结果'
+          }
+        ]
+      }
+    ],
+    en: [
+      {
+        value: '0.1.0',
+        description: 'Default version',
+        inputs: [
+          {
+            key: 'url',
+            label: 'Url',
+            renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input],
+            valueType: WorkflowIOValueTypeEnum.string,
+            required: true,
+            toolDescription: 'The URL of the webpage to scrape'
+          },
+          {
+            key: 'format',
+            label: 'Output format',
+            renderTypeList: [FlowNodeInputTypeEnum.select],
+            valueType: WorkflowIOValueTypeEnum.string,
+            required: true,
+            list: [
+              { label: 'Markdown', value: 'markdown' },
+              { label: 'HTML', value: 'html' }
+            ],
+            defaultValue: 'markdown'
+          },
+          {
+            key: 'faster',
+            label: 'Quick mode',
+            renderTypeList: [FlowNodeInputTypeEnum.switch],
+            valueType: WorkflowIOValueTypeEnum.boolean,
+            defaultValue: true
+          }
+        ],
+        outputs: [
+          {
+            valueType: WorkflowIOValueTypeEnum.string,
+            key: 'result',
+            label: 'Crawled result'
+          }
+        ]
+      }
+    ]
+  }
 });

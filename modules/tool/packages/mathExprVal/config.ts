@@ -10,37 +10,65 @@ export default defineTool({
   type: ToolTypeEnum.tools,
   name: {
     'zh-CN': '数学公式执行',
-    en: 'Mathematical Expression Execution'
+    en: 'Execution of mathematical expressions'
   },
   description: {
     'zh-CN': '用于执行数学表达式的工具，通过 js 的 expr-eval 库运行表达式并返回结果。',
-    en: 'A tool for executing mathematical expressions using the expr-eval library in js to return the result.'
+    en: 'Executes mathematical expressions using JavaScript\'s expr-eval library and returns the result.'
   },
   icon: 'core/workflow/template/mathCall',
-  versionList: [
-    {
-      value: '0.1.0',
-      description: 'Default version',
-      inputs: [
-        {
-          renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input],
-          selectedTypeIndex: 0,
-          valueType: WorkflowIOValueTypeEnum.string,
-          key: 'expr',
-          label: '数学表达式',
-          description: '需要执行的数学表达式',
-          required: true,
-          toolDescription: '需要执行的数学表达式'
-        }
-      ],
-      outputs: [
-        {
-          description: '返回的数学表达式结果',
-          key: 'result',
-          valueType: WorkflowIOValueTypeEnum.string,
-          label: 'result'
-        }
-      ]
-    }
-  ]
+  versionList: {
+    'zh-CN': [
+      {
+        value: '0.1.0',
+        description: 'Default version',
+        inputs: [
+          {
+            renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input],
+            selectedTypeIndex: 0,
+            valueType: WorkflowIOValueTypeEnum.string,
+            key: 'expr',
+            label: '数学表达式',
+            description: '需要执行的数学表达式',
+            required: true,
+            toolDescription: '需要执行的数学表达式'
+          }
+        ],
+        outputs: [
+          {
+            description: '返回的数学表达式结果',
+            key: 'result',
+            valueType: WorkflowIOValueTypeEnum.string,
+            label: 'result'
+          }
+        ]
+      }
+    ],
+    en: [
+      {
+        value: '0.1.0',
+        description: 'Default version',
+        inputs: [
+          {
+            renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input],
+            selectedTypeIndex: 0,
+            valueType: WorkflowIOValueTypeEnum.string,
+            key: 'expr',
+            label: 'Mathematical expression',
+            description: 'Mathematical expression you want to execute',
+            required: true,
+            toolDescription: 'Mathematical expression you want to execute'
+          }
+        ],
+        outputs: [
+          {
+            description: 'The returned execution result of the mathematical expression',
+            key: 'result',
+            valueType: WorkflowIOValueTypeEnum.string,
+            label: 'result'
+          }
+        ]
+      }
+    ]
+  }
 });

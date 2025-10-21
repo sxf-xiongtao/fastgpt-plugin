@@ -4,20 +4,31 @@ import { ToolTypeEnum } from '@tool/type/tool';
 export default defineToolSet({
   name: {
     'zh-CN': 'GitHub 工具集',
-    en: 'GitHub Tool Set'
+    en: 'GitHub toolkit'
   },
   type: ToolTypeEnum.tools,
   description: {
     'zh-CN': 'GitHub 工具集',
-    en: 'GitHub Tool Set'
+    en: 'GitHub toolkit'
   },
-  secretInputConfig: [
-    {
-      key: 'token',
-      label: 'GitHub Token',
-      description: '可选，填写后可提升API速率或访问更多信息',
-      inputType: 'secret',
-      required: false
-    }
-  ]
+  secretInputConfig: {
+    'zh-CN': [
+      {
+        key: 'token',
+        label: 'GitHub Token',
+        description: '可选，填写后可提升API速率或访问更多信息',
+        inputType: 'secret',
+        required: false
+      }
+    ],
+    en: [
+      {
+        key: 'token',
+        label: 'GitHub Token',
+        description: 'Optional. If enabled, API rate will be enhanced, or more information can be accessed.',
+        inputType: 'secret',
+        required: false
+      }
+    ]
+  }
 });
