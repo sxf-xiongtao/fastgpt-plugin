@@ -10,21 +10,38 @@ export default defineToolSet({
   type: ToolTypeEnum.search,
   description: {
     'zh-CN': '使用从任何网站抓取的干净数据为您的AI应用程序提供动力。',
-    en: `Web scraper for LLMs. Power your AI apps with clean data crawled from any website. It's also open source. `
+    en: 'Empowers your AI apps with clean data crawled from any website.'
   },
-  secretInputConfig: [
-    {
-      key: 'apiUrl',
-      label: 'Firecrawl API Url',
-      description: 'Firecrawl 的 API 地址，如果使用官方的服务，这里可以留空。',
-      required: false,
-      inputType: 'input'
-    },
-    {
-      key: 'apiKey',
-      label: 'Firecrawl API Key',
-      required: true,
-      inputType: 'secret'
-    }
-  ]
+  secretInputConfig: {
+    'zh-CN': [
+      {
+        key: 'apiUrl',
+        label: 'Firecrawl API Url',
+        description: 'Firecrawl 的 API 地址，如果使用官方的服务，这里可以留空。',
+        required: false,
+        inputType: 'input'
+      },
+      {
+        key: 'apiKey',
+        label: 'Firecrawl API Key',
+        required: true,
+        inputType: 'secret'
+      }
+    ],
+    en: [
+      {
+        key: 'apiUrl',
+        label: 'Firecrawl API Url',
+        description: 'API address of Firecrawl, which is not required if the official service is used.',
+        required: false,
+        inputType: 'input'
+      },
+      {
+        key: 'apiKey',
+        label: 'Firecrawl API Key',
+        required: true,
+        inputType: 'secret'
+      }
+    ]
+  }
 });

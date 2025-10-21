@@ -98,18 +98,27 @@ export const VersionListItemSchema = z.object({
   outputs: z.array(OutputSchema).describe('The outputs of the tool')
 });
 
+export const VersionListSchema = z.object({
+  en: z.array(VersionListItemSchema),
+  'zh-CN': z.array(VersionListItemSchema).optional(),
+  'zh-Hant': z.array(VersionListItemSchema).optional()
+});
+
+export const SecretInputConfigSchema = z.object({
+  en: z.array(InputConfigSchema),
+  'zh-CN': z.array(InputConfigSchema).optional(),
+  'zh-Hant': z.array(InputConfigSchema).optional()
+});
+
 export const ToolConfigSchema = z
   .object({
     toolId: z.string().optional().describe('The unique id of the tool'),
     name: InfoString.describe('The name of the tool'),
     description: InfoString.describe('The description of the tool'),
-    toolDescription: z
-      .string()
-      .optional()
-      .describe(
-        'The tool description for ai to use, fallback to English description if not provided'
-      ),
-    versionList: z.array(VersionListItemSchema).min(1).describe('The version list'),
+    toolDescription: InfoString.describe(
+      'The tool description for ai to use, fallback to English description if not provided'
+    ),
+    versionList: VersionListSchema.min(1).describe('The version list'),
 
     // Can be inherited
     isActive: z.boolean().optional().describe('Default is active'),
@@ -117,10 +126,7 @@ export const ToolConfigSchema = z
     icon: z.string().optional().describe('The icon of the tool'),
     author: z.string().optional().describe('The author of the tool'),
     courseUrl: z.string().optional().describe('The documentation URL of the tool'),
-    secretInputConfig: z
-      .array(InputConfigSchema)
-      .optional()
-      .describe('The secret input list of the tool')
+    secretInputConfig: SecretInputConfigSchema.optional().describe('The secret input list of the tool')
   })
   .describe('The Tool Config Schema');
 export const toolConfigWithCbSchema = ToolConfigSchema.merge(
@@ -140,10 +146,7 @@ export const ToolSchema = toolConfigWithCbSchema.merge(
     toolDirName: z.string(),
 
     // ToolSet Parent
-    secretInputConfig: z
-      .array(InputConfigSchema)
-      .optional()
-      .describe('The secret input list of the tool')
+    secretInputConfig: SecretInputConfigSchema.optional().describe('The secret input list of the tool')
   })
 );
 

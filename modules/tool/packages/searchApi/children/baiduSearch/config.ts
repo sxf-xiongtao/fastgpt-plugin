@@ -4,43 +4,78 @@ import { FlowNodeInputTypeEnum, WorkflowIOValueTypeEnum } from '@tool/type/fastg
 export default defineTool({
   name: {
     'zh-CN': '百度搜索',
-    en: 'Baidu Search'
+    en: 'Baidu'
   },
   description: {
     'zh-CN': '调用百度搜索',
-    en: 'Call Baidu search'
+    en: 'Performs search using Baidu.'
   },
-  versionList: [
-    {
-      value: '0.1.0',
-      description: 'Default version',
-      inputs: [
-        {
-          key: 'q',
-          label: '搜索关键词',
-          toolDescription: '搜索关键词',
-          required: true,
-          valueType: WorkflowIOValueTypeEnum.string,
-          renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input]
-        },
-        {
-          key: 'num',
-          label: '最大搜索数量',
-          valueType: WorkflowIOValueTypeEnum.number,
-          renderTypeList: [FlowNodeInputTypeEnum.numberInput, FlowNodeInputTypeEnum.reference],
-          value: 20,
-          max: 100,
-          min: 1
-        }
-      ],
-      outputs: [
-        {
-          valueType: WorkflowIOValueTypeEnum.arrayObject,
-          key: 'result',
-          label: '搜索结果',
-          description: '搜索结果'
-        }
-      ]
-    }
-  ]
+  versionList: {
+    'zh-CN': [
+      {
+        value: '0.1.0',
+        description: 'Default version',
+        inputs: [
+          {
+            key: 'q',
+            label: '搜索关键词',
+            toolDescription: '搜索关键词',
+            required: true,
+            valueType: WorkflowIOValueTypeEnum.string,
+            renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input]
+          },
+          {
+            key: 'num',
+            label: '最大搜索数量',
+            valueType: WorkflowIOValueTypeEnum.number,
+            renderTypeList: [FlowNodeInputTypeEnum.numberInput, FlowNodeInputTypeEnum.reference],
+            value: 20,
+            max: 100,
+            min: 1
+          }
+        ],
+        outputs: [
+          {
+            valueType: WorkflowIOValueTypeEnum.arrayObject,
+            key: 'result',
+            label: '搜索结果',
+            description: '搜索结果'
+          }
+        ]
+      }
+    ],
+    en: [
+      {
+        value: '0.1.0',
+        description: 'Default version',
+        inputs: [
+          {
+            key: 'q',
+            label: 'Keyword',
+            toolDescription: 'Keyword',
+            required: true,
+            valueType: WorkflowIOValueTypeEnum.string,
+            renderTypeList: [FlowNodeInputTypeEnum.reference, FlowNodeInputTypeEnum.input]
+          },
+          {
+            key: 'num',
+            label: 'Maximum number of results to return',
+            valueType: WorkflowIOValueTypeEnum.number,
+            renderTypeList: [FlowNodeInputTypeEnum.numberInput, FlowNodeInputTypeEnum.reference],
+            value: 20,
+            max: 100,
+            min: 1
+          }
+        ],
+        outputs: [
+          {
+            valueType: WorkflowIOValueTypeEnum.arrayObject,
+            key: 'result',
+            label: 'Search results',
+            description: 'Search results'
+          }
+        ]
+      }
+    ]
+  }
 });
