@@ -118,7 +118,7 @@ export const ToolConfigSchema = z
     toolDescription: InfoString.optional().describe(
       'The tool description for ai to use, fallback to English description if not provided'
     ),
-    versionList: VersionListSchema.min(1).describe('The version list'),
+    versionList: VersionListSchema.describe('The version list'),
 
     // Can be inherited
     isActive: z.boolean().optional().describe('Default is active'),

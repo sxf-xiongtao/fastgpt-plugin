@@ -41,7 +41,9 @@ export const LoadToolsByFilename = async (
       icon,
       toolDirName: filename,
       cb: () => Promise.resolve({}),
-      versionList: []
+      versionList: {
+        en: []
+      }
     });
     // Push children
     const getChildren = async (toolRootPath: string) => {
