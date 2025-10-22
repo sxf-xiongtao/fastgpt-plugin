@@ -23,10 +23,10 @@ export function defineTool(tool: ToolConfigType) {
   let versionList: typeof tool.versionList;
 
   if (Array.isArray(tool.versionList)) {
-    versionList = tool.versionList.map(processVersion);
+    versionList = (tool.versionList as any[]).map(processVersion) as typeof tool.versionList;
   } else {
     versionList = Object.entries(tool.versionList).reduce((acc, [lang, versions]) => {
-      acc[lang] = (versions as any[]).map(processVersion);
+      (acc as any)[lang] = (versions as any[]).map(processVersion);
       return acc;
     }, {} as typeof tool.versionList);
   }
