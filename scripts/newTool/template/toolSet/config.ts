@@ -11,15 +11,28 @@ export default defineToolSet({
     'zh-CN': '这是一个样例工具集',
     en: 'This is a sample tool set'
   },
-  toolDescription:
-    'tool description for ai to use, fallback to English description if not provided',
-  secretInputConfig: [
-    {
-      key: 'apiKey',
-      label: 'API Key',
-      description: '可以在 xxx 获取',
-      required: true,
-      inputType: 'secret'
-    }
-  ]
+  toolDescription: {
+    'zh-CN': '这是一个样例工具集，用于演示如何创建新的工具集',
+    en: 'This is a sample tool set for demonstrating how to create new tool sets'
+  },
+  secretInputConfig: {
+    'zh-CN': [
+      {
+        key: 'apiKey',
+        label: 'API Key',
+        description: '可以在 xxx 获取',
+        required: true,
+        inputType: 'secret'
+      }
+    ],
+    en: [
+      {
+        key: 'apiKey',
+        label: 'API Key',
+        description: 'API key can be obtained from xxx',
+        required: true,
+        inputType: 'secret'
+      }
+    ]
+  }
 });
