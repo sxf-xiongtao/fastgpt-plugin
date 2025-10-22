@@ -60,7 +60,7 @@ export const LoadToolsByFilename = async (
       return children;
     };
 
-    const children = isProd ? rootMod.children : await getChildren(toolRootPath);
+    const children = isProd ? (rootMod.children || []) : await getChildren(toolRootPath);
 
     for (const child of children) {
       const toolId = child.toolId!;
