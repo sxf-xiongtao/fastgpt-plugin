@@ -10,7 +10,7 @@ export default defineTool({
   type: ToolTypeEnum.tools,
   name: {
     'zh-CN': '数学公式执行',
-    en: 'Execution of mathematical expressions'
+    en: 'Math expression evaluation'
   },
   description: {
     'zh-CN': '用于执行数学表达式的工具，通过 js 的 expr-eval 库运行表达式并返回结果。',

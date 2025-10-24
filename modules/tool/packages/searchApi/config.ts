@@ -10,13 +10,13 @@ export default defineToolSet({
   type: ToolTypeEnum.search,
   description: {
     'zh-CN': 'SearchApi 服务',
-    en: 'Search API'
+    en: 'Search API.'
   },
   secretInputConfig: {
     'zh-CN': [
       {
         key: 'apiKey',
-        label: 'Search API Key',
+        label: 'Search API key',
         required: true,
         inputType: 'secret'
       }
@@ -24,7 +24,7 @@ export default defineToolSet({
     en: [
       {
         key: 'apiKey',
-        label: 'Search API Key',
+        label: 'Search API key',
         required: true,
         inputType: 'secret'
       }

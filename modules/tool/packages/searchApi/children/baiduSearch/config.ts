@@ -59,7 +59,7 @@ export default defineTool({
           },
           {
             key: 'num',
-            label: 'Maximum number of results to return',
+            label: 'Max returned results',
             valueType: WorkflowIOValueTypeEnum.number,
             renderTypeList: [FlowNodeInputTypeEnum.numberInput, FlowNodeInputTypeEnum.reference],
             value: 20,

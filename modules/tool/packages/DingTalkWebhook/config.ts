@@ -6,7 +6,7 @@ export default defineTool({
   type: ToolTypeEnum.communication,
   name: {
     'zh-CN': '钉钉 webhook',
-    en: 'DingTalk Webhook'
+    en: 'DingTalk webhook'
   },
   description: {
     'zh-CN': '向钉钉机器人发起 webhook 请求。',

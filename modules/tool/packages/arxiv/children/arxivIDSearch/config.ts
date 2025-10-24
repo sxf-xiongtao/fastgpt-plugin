@@ -14,7 +14,7 @@ export default defineTool({
   },
   description: {
     'zh-CN': '通过 ArXiv ID 精确查找特定论文的详细信息',
-    en: 'Retrieves details of a specific paper based on its arXiv ID.'
+    en: 'Searches details of a specific paper based on its arXiv ID.'
   },
   versionList: {
     'zh-CN': [

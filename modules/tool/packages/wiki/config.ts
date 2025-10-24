@@ -14,7 +14,7 @@ export default defineTool({
   },
   description: {
     'zh-CN': '在Wiki中查询释义。',
-    en: 'Retrieves definition and explanation from Wikipedia.'
+    en: 'Provides open-access knowledge on any topic.'
   },
   icon: 'core/workflow/template/wiki',
   versionList: {

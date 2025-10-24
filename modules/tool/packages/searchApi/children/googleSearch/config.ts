@@ -45,11 +45,11 @@ export default defineTool({
             renderTypeList: [FlowNodeInputTypeEnum.select],
             defaultValue: 'last_year',
             list: [
-              { label: 'last_hour', value: 'last_hour' },
-              { label: 'last_day', value: 'last_day' },
-              { label: 'last_week', value: 'last_week' },
-              { label: 'last_month', value: 'last_month' },
-              { label: 'last_year', value: 'last_year' }
+              { label: 'Last hour', value: 'last_hour' },
+              { label: 'Last day', value: 'last_day' },
+              { label: 'Last week', value: 'last_week' },
+              { label: 'Last month', value: 'last_month' },
+              { label: 'Last year', value: 'last_year' }
             ]
           }
         ],
@@ -78,7 +78,7 @@ export default defineTool({
           },
           {
             key: 'num',
-            label: 'Maximum number of results to return',
+            label: 'Max returned results',
             valueType: WorkflowIOValueTypeEnum.number,
             renderTypeList: [FlowNodeInputTypeEnum.numberInput, FlowNodeInputTypeEnum.reference],
             value: 20,
@@ -92,11 +92,11 @@ export default defineTool({
             renderTypeList: [FlowNodeInputTypeEnum.select],
             defaultValue: 'last_year',
             list: [
-              { label: 'last_hour', value: 'last_hour' },
-              { label: 'last_day', value: 'last_day' },
-              { label: 'last_week', value: 'last_week' },
-              { label: 'last_month', value: 'last_month' },
-              { label: 'last_year', value: 'last_year' }
+              { label: 'Last hour', value: 'last_hour' },
+              { label: 'Last day', value: 'last_day' },
+              { label: 'Last week', value: 'last_week' },
+              { label: 'Last month', value: 'last_month' },
+              { label: 'Last year', value: 'last_year' }
             ]
           }
         ],

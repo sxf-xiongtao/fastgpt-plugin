@@ -91,7 +91,7 @@ export default defineTool({
           {
             valueType: WorkflowIOValueTypeEnum.string,
             key: 'result',
-            label: 'Crawled result'
+            label: 'Crawling result'
           }
         ]
       }

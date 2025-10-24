@@ -80,11 +80,11 @@ export default defineTool({
           {
             key: 'keyword',
             label: 'Keyword',
-            description: 'Keyword of the paper to retrieve',
+            description: 'Keyword used to search papers',
             required: true,
             valueType: WorkflowIOValueTypeEnum.string,
             renderTypeList: [FlowNodeInputTypeEnum.input, FlowNodeInputTypeEnum.reference],
-            toolDescription: 'Keyword of the paper to retrieve'
+            toolDescription: 'Keyword used to search papers'
           },
           {
             key: 'maxResults',

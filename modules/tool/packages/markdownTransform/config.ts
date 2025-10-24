@@ -10,7 +10,7 @@ export default defineTool({
   type: ToolTypeEnum.tools,
   description: {
     'zh-CN': '将 Markdown 转成指定格式文件，返回的文件链接请及时下载。',
-    en: 'Converts the Markdown content into the specified format of files. The returned file should be downloaded immediately via the link.'
+    en: 'Converts the Markdown content into the specified format of files.'
   },
   versionList: {
     'zh-CN': [

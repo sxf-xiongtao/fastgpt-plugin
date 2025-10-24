@@ -10,11 +10,11 @@ export default defineTool({
   type: ToolTypeEnum.tools,
   name: {
     'zh-CN': '网页内容抓取',
-    en: 'Webpage content capture'
+    en: 'WebScraper'
   },
   description: {
     'zh-CN': '可获取一个网页链接内容，并以 Markdown 格式输出，仅支持获取静态网站。',
-    en: 'Captures webpage content and outputs it in Markdown format. Supports only static websites.'
+    en: 'Extracts webpage content and outputs it in Markdown format. Supports only static websites.'
   },
   icon: 'core/workflow/template/fetchUrl',
   versionList: {

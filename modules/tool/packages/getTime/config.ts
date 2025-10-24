@@ -10,7 +10,7 @@ export default defineTool({
   },
   description: {
     'zh-CN': '获取当前时间',
-    en: 'Gets the current time'
+    en: 'Gets the current time.'
   },
   icon: 'core/workflow/template/getTime',
   versionList: {
