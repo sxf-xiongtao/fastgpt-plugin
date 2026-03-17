@@ -11,6 +11,14 @@ export type ModelProviderItem = {
 };
 
 export const ModelProviders: ModelProviderItem[] = [
+  {
+    provider: 'SangforAICP',
+    value: {
+      en: 'Sangfor AICP',
+      'zh-CN': '深信服',
+      'zh-Hant': '深信服'
+    }
+  },
   // 海外模型厂商
   {
     provider: 'OpenAI',
@@ -283,15 +291,6 @@ export const ModelProviders: ModelProviderItem[] = [
     }
   },
   {
-    provider: 'Sangfor',
-    value: {
-      en: 'Sangfor',
-      'zh-CN': '深信服',
-      'zh-Hant': '深信服'
-    }
-  },
-
-  {
     provider: 'Other',
     value: {
       en: 'Other',
@@ -312,6 +311,7 @@ export type AIProxyChannelsType = {
 }[];
 
 export const aiproxyChannels: AIProxyChannelsType = [
+  { channelId: 50, name: 'Sangfor AICP', avatar: 'sangfor' },
   // 海外模型厂商 + 云厂商
   { channelId: 1, name: 'OpenAI', avatar: 'openai' },
   { channelId: 14, name: 'Anthropic', avatar: 'anthropic' },
@@ -400,7 +400,6 @@ export const aiproxyChannels: AIProxyChannelsType = [
   { channelId: 42, name: 'vertexai', avatar: 'vertexai' },
   { channelId: 41, name: 'novita', avatar: 'novita' },
   { channelId: 30, name: 'Ollama', avatar: 'ollama' },
-  { channelId: 48, name: 'Sangfor', avatar: 'sangfor' },
 
   // 三方 AI，非模型提供商
   { channelId: 46, name: 'Doc2X', avatar: 'doc2x' },
