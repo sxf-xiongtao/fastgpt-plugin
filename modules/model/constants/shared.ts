@@ -399,6 +399,6 @@ export const aiproxyIdMap: AiproxyMapProviderType = {
   },
   48: {
     name: 'Sangfor AICP',
-    provider: 'Sangfor'
+    provider: 'Sangfor AICP'
   }
 };
