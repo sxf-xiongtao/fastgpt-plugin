@@ -6,6 +6,11 @@ export type ModelProviderMap = {
 };
 
 export const ModelProviderMap: ModelProviderMap = {
+  SangforAICP: {
+    en: 'Sangfor AICP',
+    'zh-CN': '深信服',
+    'zh-Hant': '深信服'
+  },
   OpenAI: {
     en: 'OpenAI',
     'zh-CN': 'OpenAI',
@@ -165,11 +170,6 @@ export const ModelProviderMap: ModelProviderMap = {
     en: 'PPIO',
     'zh-CN': 'PPIO',
     'zh-Hant': 'PPIO'
-  },
-  Sangfor: {
-    en: 'Sangfor',
-    'zh-CN': '深信服',
-    'zh-Hant': '深信服'
   },
   Other: {
     en: 'Other',
@@ -397,8 +397,8 @@ export const aiproxyIdMap: AiproxyMapProviderType = {
     provider: 'Other',
     avatar: 'model/coze'
   },
-  48: {
-    name: 'Sangfor',
-    provider: 'Sangfor'
+  50: {
+    name: 'Sangfor AICP',
+    provider: 'SangforAICP'
   }
 };
