@@ -1,0 +1,492 @@
+{
+  "name": "問題分類 + 知識庫",
+  "intro": "先對用戶的問題進行分類，再根據不同類型問題，執行不同的操作",
+  "author": "",
+  "avatar": "core/workflow/template/questionClassify",
+  "tags": [
+    "office-services"
+  ],
+  "type": "advanced",
+  "workflow": {
+    "nodes": [
+      {
+        "nodeId": "userGuide",
+        "name": "系統配置",
+        "intro": "可以配置應用的系統參數",
+        "avatar": "core/workflow/template/systemConfig",
+        "flowNodeType": "userGuide",
+        "position": {
+          "x": 531.2422736065552,
+          "y": -486.7611729549753
+        },
+        "version": "481",
+        "inputs": [],
+        "outputs": []
+      },
+      {
+        "nodeId": "workflowStartNodeId",
+        "name": "流程開始",
+        "intro": "",
+        "avatar": "core/workflow/template/workflowStart",
+        "flowNodeType": "workflowStart",
+        "position": {
+          "x": 558.4082376415505,
+          "y": 123.72387429194112
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "用戶問題"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "userChatInput",
+            "key": "userChatInput",
+            "label": "core.module.input.label.user question",
+            "valueType": "string",
+            "type": "FlowNodeOutputTypeEnum.static"
+          }
+        ]
+      },
+      {
+        "nodeId": "7BdojPlukIQw",
+        "name": "AI 對話",
+        "intro": "AI 大模型對話",
+        "avatar": "core/workflow/template/aiChat",
+        "flowNodeType": "chatNode",
+        "showStatus": true,
+        "position": {
+          "x": 2701.1267277679685,
+          "y": -767.8956312653042
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "model",
+            "renderTypeList": [
+              "settingLLMModel",
+              "reference"
+            ],
+            "label": "core.module.input.label.aiModel",
+            "valueType": "string",
+            "value": "gpt-5"
+          },
+          {
+            "key": "temperature",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 3,
+            "valueType": "number",
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          {
+            "key": "maxToken",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 1950,
+            "valueType": "number",
+            "min": 100,
+            "max": 4000,
+            "step": 50
+          },
+          {
+            "key": "isResponseAnswerText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": true,
+            "valueType": "boolean"
+          },
+          {
+            "key": "quoteTemplate",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string"
+          },
+          {
+            "key": "quotePrompt",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string"
+          },
+          {
+            "key": "systemPrompt",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "max": 3000,
+            "valueType": "string",
+            "label": "core.ai.Prompt",
+            "description": "core.app.tip.systemPromptTip",
+            "placeholder": "core.app.tip.chatNodeSystemPromptTip",
+            "value": ""
+          },
+          {
+            "key": "history",
+            "renderTypeList": [
+              "numberInput",
+              "reference"
+            ],
+            "valueType": "chatHistory",
+            "label": "core.module.input.label.chat history",
+            "required": true,
+            "min": 0,
+            "max": 30,
+            "value": 6
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "用戶問題",
+            "value": [
+              "workflowStartNodeId",
+              "userChatInput"
+            ]
+          },
+          {
+            "key": "quoteQA",
+            "renderTypeList": [
+              "settingDatasetQuotePrompt"
+            ],
+            "label": "",
+            "debugLabel": "知識庫引用",
+            "description": "",
+            "valueType": "datasetQuote",
+            "value": [
+              "MNMMMIjjWyMU",
+              "quoteQA"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "history",
+            "key": "history",
+            "label": "core.module.output.label.New context",
+            "description": "core.module.output.description.New context",
+            "valueType": "chatHistory",
+            "type": "FlowNodeOutputTypeEnum.static"
+          },
+          {
+            "id": "answerText",
+            "key": "answerText",
+            "label": "core.module.output.label.Ai response content",
+            "description": "core.module.output.description.Ai response content",
+            "valueType": "string",
+            "type": "FlowNodeOutputTypeEnum.static"
+          }
+        ]
+      },
+      {
+        "nodeId": "rvbo634w3AYj",
+        "name": "問題分類",
+        "intro": "根據用戶的歷史記錄和當前問題判斷該次提問的類型。可以添加多組問題類型，下面是一個模板例子：\n類型1: 打招呼\n類型2: 關於商品\"使用\"問題\n類型3: 關於商品\"購買\"問題\n類型4: 其他問題",
+        "avatar": "core/workflow/template/questionClassify",
+        "flowNodeType": "classifyQuestion",
+        "showStatus": true,
+        "position": {
+          "x": 1020.9667229609946,
+          "y": -385.0060974413916
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "model",
+            "renderTypeList": [
+              "selectLLMModel",
+              "reference"
+            ],
+            "label": "core.module.input.label.aiModel",
+            "required": true,
+            "valueType": "string",
+            "llmModelType": "classify",
+            "value": "gpt-5"
+          },
+          {
+            "key": "systemPrompt",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "max": 3000,
+            "valueType": "string",
+            "label": "core.module.input.label.Background",
+            "description": "core.module.input.description.Background",
+            "placeholder": "core.module.input.placeholder.Classify background",
+            "value": ""
+          },
+          {
+            "key": "history",
+            "renderTypeList": [
+              "numberInput",
+              "reference"
+            ],
+            "valueType": "chatHistory",
+            "label": "core.module.input.label.chat history",
+            "required": true,
+            "min": 0,
+            "max": 30,
+            "value": 6
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "value": [
+              "workflowStartNodeId",
+              "userChatInput"
+            ]
+          },
+          {
+            "key": "agents",
+            "renderTypeList": [
+              "custom"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": [
+              {
+                "value": "關於電影《星際穿越》的問題",
+                "key": "wqre"
+              },
+              {
+                "value": "打招呼、問候等問題",
+                "key": "sdfa"
+              },
+              {
+                "value": "其他問題",
+                "key": "agex"
+              }
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "cqResult",
+            "key": "cqResult",
+            "label": "分類結果",
+            "valueType": "string",
+            "type": "FlowNodeOutputTypeEnum.static"
+          }
+        ]
+      },
+      {
+        "nodeId": "7kwgL1dVlwG6",
+        "name": "指定回複",
+        "intro": "該模塊可以直接回複一段指定的內容。常用於引導、提示。非字符串內容傳入時，會轉成字符串進行輸出。",
+        "avatar": "core/workflow/template/reply",
+        "flowNodeType": "answerNode",
+        "position": {
+          "x": 1874.9167551056487,
+          "y": 434.98431875888207
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "text",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "valueType": "string",
+            "label": "core.module.input.label.Response content",
+            "description": "core.module.input.description.Response content",
+            "placeholder": "core.module.input.description.Response content",
+            "selectedTypeIndex": 1,
+            "value": [
+              "rvbo634w3AYj",
+              "cqResult"
+            ]
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "MNMMMIjjWyMU",
+        "name": "知識庫搜索",
+        "intro": "調用\"語義檢索\"和\"全文檢索\"能力，從\"知識庫\"中查找可能與問題相關的參考內容",
+        "avatar": "core/workflow/template/datasetSearch",
+        "flowNodeType": "datasetSearchNode",
+        "showStatus": true,
+        "position": {
+          "x": 1851.010152279949,
+          "y": -613.3555232387284
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "datasets",
+            "renderTypeList": [
+              "selectDataset",
+              "reference"
+            ],
+            "label": "core.module.input.label.Select dataset",
+            "value": [],
+            "valueType": "selectDataset",
+            "list": [],
+            "required": true
+          },
+          {
+            "key": "similarity",
+            "renderTypeList": [
+              "selectDatasetParamsModal"
+            ],
+            "label": "",
+            "value": 0.4,
+            "valueType": "number"
+          },
+          {
+            "key": "limit",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 5000,
+            "valueType": "number"
+          },
+          {
+            "key": "searchMode",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "value": "embedding"
+          },
+          {
+            "key": "usingReRank",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "key": "datasetSearchUsingExtensionQuery",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "boolean",
+            "value": true
+          },
+          {
+            "key": "datasetSearchExtensionModel",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string"
+          },
+          {
+            "key": "datasetSearchExtensionBg",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "需要檢索的內容",
+            "value": [
+              "workflowStartNodeId",
+              "userChatInput"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "quoteQA",
+            "key": "quoteQA",
+            "label": "core.module.Dataset quote.label",
+            "description": "特殊數組格式，搜索結果為空時，返回空數組。",
+            "type": "FlowNodeOutputTypeEnum.static",
+            "valueType": "datasetQuote"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "workflowStartNodeId",
+        "target": "rvbo634w3AYj",
+        "sourceHandle": "workflowStartNodeId-source-right",
+        "targetHandle": "rvbo634w3AYj-target-left"
+      },
+      {
+        "source": "rvbo634w3AYj",
+        "target": "7kwgL1dVlwG6",
+        "sourceHandle": "rvbo634w3AYj-source-agex",
+        "targetHandle": "7kwgL1dVlwG6-target-left"
+      },
+      {
+        "source": "rvbo634w3AYj",
+        "target": "MNMMMIjjWyMU",
+        "sourceHandle": "rvbo634w3AYj-source-wqre",
+        "targetHandle": "MNMMMIjjWyMU-target-left"
+      },
+      {
+        "source": "MNMMMIjjWyMU",
+        "target": "7BdojPlukIQw",
+        "sourceHandle": "MNMMMIjjWyMU-source-right",
+        "targetHandle": "7BdojPlukIQw-target-left"
+      },
+      {
+        "source": "rvbo634w3AYj",
+        "target": "7kwgL1dVlwG6",
+        "sourceHandle": "rvbo634w3AYj-source-sdfa",
+        "targetHandle": "7kwgL1dVlwG6-target-left"
+      }
+    ],
+    "chatConfig": {
+      "scheduledTriggerConfig": {
+        "cronString": "",
+        "timezone": "Asia/Shanghai",
+        "defaultPrompt": ""
+      },
+      "welcomeText": "你好，我是知識庫助手，請不要忘記選擇知識庫噢~\n[你是誰]\n[如何使用]"
+    }
+  }
+}
