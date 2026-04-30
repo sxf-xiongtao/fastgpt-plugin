@@ -1,0 +1,2371 @@
+{
+  "name": "長文翻譯專家",
+  "intro": "使用專有名詞知識庫协助翻譯,更适合長文本的翻譯机器人",
+  "author": "",
+  "avatar": "core/app/templates/TranslateRobot",
+  "tags": [
+    "office-services"
+  ],
+  "type": "advanced",
+  "userGuide": {
+    "type": "link",
+    "content": "https://mp.weixin.qq.com/s/2kXdaSLOImhH1DTaFU8qXA"
+  },
+  "workflow": {
+    "nodes": [
+      {
+        "nodeId": "userGuide",
+        "name": "系統配置",
+        "intro": "可以配置應用的系統參數",
+        "avatar": "core/workflow/template/systemConfig",
+        "flowNodeType": "userGuide",
+        "position": {
+          "x": -3580.557768149762,
+          "y": -789.3781335716197
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "welcomeText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "string",
+            "label": "core.app.Welcome Text",
+            "value": ""
+          },
+          {
+            "key": "variables",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "core.app.Chat Variable",
+            "value": []
+          },
+          {
+            "key": "questionGuide",
+            "valueType": "any",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "core.app.Question Guide",
+            "value": {
+              "open": false
+            }
+          },
+          {
+            "key": "tts",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "type": "web"
+            }
+          },
+          {
+            "key": "whisper",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "open": false,
+              "autoSend": false,
+              "autoTTSResponse": false
+            }
+          },
+          {
+            "key": "scheduleTrigger",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": null
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "448745",
+        "name": "流程開始",
+        "intro": "",
+        "avatar": "core/workflow/template/workflowStart",
+        "flowNodeType": "workflowStart",
+        "position": {
+          "x": -4423.869761318094,
+          "y": 270.52507717746244
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "用戶問題",
+            "debugLabel": ""
+          }
+        ],
+        "outputs": [
+          {
+            "id": "userChatInput",
+            "key": "userChatInput",
+            "label": "common:core.module.input.label.user question",
+            "type": "static",
+            "valueType": "string",
+            "description": ""
+          },
+          {
+            "id": "userFiles",
+            "key": "userFiles",
+            "label": "app:workflow.user_file_input",
+            "description": "app:workflow.user_file_input_desc",
+            "type": "static",
+            "valueType": "arrayString"
+          }
+        ]
+      },
+      {
+        "nodeId": "yjFO3YcM7KG2",
+        "name": "多文本塊翻譯",
+        "intro": "AI 大模型對話",
+        "avatar": "core/workflow/template/aiChat",
+        "flowNodeType": "chatNode",
+        "showStatus": true,
+        "position": {
+          "x": 889.049018199629,
+          "y": -146.47492282253756
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "model",
+            "renderTypeList": [
+              "settingLLMModel",
+              "reference"
+            ],
+            "label": "core.module.input.label.aiModel",
+            "valueType": "string",
+            "selectedTypeIndex": 0,
+            "value": "claude-3-5-sonnet-20240620",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "temperature",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 3,
+            "valueType": "number",
+            "min": 0,
+            "max": 10,
+            "step": 1,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "maxToken",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 4000,
+            "valueType": "number",
+            "min": 100,
+            "max": 4000,
+            "step": 50,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "isResponseAnswerText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": false,
+            "valueType": "boolean",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "aiChatQuoteRole",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "value": "system",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "quoteTemplate",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "value": "{{q}}\n{{a}}",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "quotePrompt",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "value": "使用 <Data></Data> 標記中的內容作為你的翻譯詞庫:\n\n<Data>\n{{quote}}\n</Data>\n\n原文: \"\"\"{{question}}\"\"\"",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "aiChatVision",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "boolean",
+            "value": false,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "systemPrompt",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "max": 3000,
+            "valueType": "string",
+            "label": "core.ai.Prompt",
+            "description": "core.app.tip.systemPromptTip",
+            "placeholder": "core.app.tip.chatNodeSystemPromptTip",
+            "value": "# Role: 資深翻譯專家\n\n## Background:\n你是一位經驗豐富的翻譯專家,精通{{source_lang}}和{{target_lang}}互譯,尤其擅長將{{source_lang}}文章譯成流畅易懂的{{target_lang}}。你曾多次帶領團隊完成大型翻譯项目,譯文廣受好評。\n\n## Attention:\n- 翻譯過程中要始終堅持\"信、達、雅\"的原則,但\"達\"尤為重要\n- 翻譯的譯文要符合{{target_lang}}的表達習惯,通俗易懂,連貫流畅\n- 避免使用過於文绉绉的表達和晦涩難懂的典故引用 \n- 詩詞歌詞等內容需按原文換行和節奏分行,不破壞原排列格式 \n- 對於專有的名詞或術語,按照給出的術語表進行合理替換 \n- 在翻譯過程中,注意保留文档原有的列表项和格式標識\n- 不要翻譯代碼塊中的內容，保持原样輸出\n\n## Constraints:\n- 必須嚴格遵循四輪翻譯流程:直譯、意譯、反思、提升\n- 譯文要忠實原文,準確無誤,不能遺漏或曲解原意\n- 注意判斷上下文，避免重複翻譯\n- 最終譯文使用Markdown的代碼塊呈現,但是不用輸出markdown這個單詞\n\n## Goals:\n- 通過四輪翻譯流程,將{{source_lang}}原文譯成高質量的{{target_lang}}譯文  \n- 譯文要準確傳達原文意思,語言表達力求浅顯易懂,朗朗上口\n- 适度使用一些熟語俗語、流行網絡用語等,增強譯文的親和力\n\n## Skills:\n- 精通{{source_lang}} {{target_lang}}兩種語言,具有紮實的語言功底和豐富的翻譯經驗\n- 擅長將{{source_lang}}表達習惯轉換為地道自然的{{target_lang}}\n- 對當代{{target_lang}}語言的發展變化有敏銳洞察,善於把握語言流行趨勢\n\n## Workflow:\n1. 第一輪直譯:逐字逐句忠實原文,不遺漏任何信息（代碼塊內容除外）\n2. 第二輪意譯:在直譯的基礎上用通俗流畅的{{target_lang}}意譯原文（代碼塊內容除外）\n3. 第三輪反思:仔細審視譯文,分點列出一份建設性的批評和有用的建議清單以改進翻譯，逐句提出建議，從以下6個角度展開\n    (i) 準確性（糾正冗余、誤譯、遺漏或未翻譯的文本錯誤），\n    (ii) 流畅性（應用{{target_lang}}的語法、拼寫和標點规則，并確保沒有不必要的重複），\n    (iii) 風格（確保翻譯反映源文本的風格并考慮其文化背景），\n    (iv) 術語（嚴格參考給出的術語表,確保術語使用一致）\n    (v) 語序（合理調整語序，不要生搬{{source_lang}}中的語序，注意調整為{{target_lang}}中的合理語序）\n    (vi) 代碼保護（確保所有代碼塊內容保持原样，不被翻譯）\n4. 第四輪提升:嚴格遵循第三輪提出的建議對翻譯修改,定稿出一個簡洁畅達、符合大眾閱讀習惯的譯文\n\n## OutputFormat:\n- 每一輪前用【思考】說明該輪要點\n- 第一輪和第二輪翻譯後用【翻譯】呈現譯文\n- 第三輪用【建議】輸出建議清單，分點列出，在每一點前用*xxx*標識這條建議對應的要點，如*風格*;建議前用【思考】說明該輪要點，建議後用【建議】呈現建議\n- 第四輪在\\`\\`\\`代碼塊中展示最終譯文內容，如\\`\\`\\`xxx\\`\\`\\`,不用輸出markdown這個單詞\n\n## Suggestions:\n- 直譯時力求忠實原文,但不要過於拘泥逐字逐句\n- 意譯時在準確表達原意的基礎上,用最樸實無華的{{target_lang}}來表達\n- 反思環節重點關注譯文是否符合{{target_lang}}表達習惯,是否通俗易懂,是否準確流畅,是否術語一致\n- 提升環節采用反思環節的建議對意譯環節的翻譯進行修改，适度采用一些口語化的表達、網絡流行語等,增強譯文的親和力\n- 所有包含在代碼塊（\\`\\`\\`）中的內容都應保持原样，不進行翻譯",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "history",
+            "renderTypeList": [
+              "numberInput",
+              "reference"
+            ],
+            "valueType": "chatHistory",
+            "label": "core.module.input.label.chat history",
+            "description": "workflow:max_dialog_rounds",
+            "required": true,
+            "min": 0,
+            "max": 50,
+            "value": 6,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "quoteQA",
+            "renderTypeList": [
+              "settingDatasetQuotePrompt"
+            ],
+            "label": "",
+            "debugLabel": "知識庫引用",
+            "description": "",
+            "valueType": "datasetQuote",
+            "value": [
+              "nLBlOh6lWxkY",
+              "quoteQA"
+            ],
+            "toolDescription": ""
+          },
+          {
+            "key": "stringQuoteText",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "label": "app:document_quote",
+            "debugLabel": "文档引用",
+            "description": "app:document_quote_tip",
+            "valueType": "string",
+            "toolDescription": ""
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "用戶問題",
+            "selectedTypeIndex": 1,
+            "value": "Your task is provide a professional translation from {{$VARIABLE_NODE_ID.source_lang$}} to  {{$VARIABLE_NODE_ID.target_lang$}} of PART of a text.\n\nThe source text is below, delimited by XML tags <SOURCE_TEXT> and </SOURCE_TEXT>. Translate only the part within the source text\ndelimited by <TRANSLATE_THIS> and </TRANSLATE_THIS>. You can use the rest of the source text as context, but do not translate any\nof the other text. Do not output anything other than the translation of the indicated part of the text.\n\n<SOURCE_TEXT>\n{{$quYZgsW32ApA.xhXu6sdEWBnF$}}\n</SOURCE_TEXT>\n\nTo reiterate, you should translate only this part of the text, shown here again between <TRANSLATE_THIS> and </TRANSLATE_THIS>:\n<TRANSLATE_THIS>\n{{$quYZgsW32ApA.eCp73lztAEGK$}}\n</TRANSLATE_THIS>\n\nOutput only the translation of the portion you are asked to translate, and nothing else",
+            "debugLabel": ""
+          }
+        ],
+        "outputs": [
+          {
+            "id": "history",
+            "key": "history",
+            "required": true,
+            "label": "common:core.module.output.label.New context",
+            "description": "將本次回複內容拼接上歷史記錄，作為新的上下文返回",
+            "valueType": "chatHistory",
+            "valueDesc": "{\n  obj: System | Human | AI;\n  value: string;\n}[]",
+            "type": "static"
+          },
+          {
+            "id": "answerText",
+            "key": "answerText",
+            "required": true,
+            "label": "common:core.module.output.label.Ai response content",
+            "description": "將在 stream 回複完毕後觸發",
+            "valueType": "string",
+            "type": "static"
+          }
+        ]
+      },
+      {
+        "nodeId": "w4heEpNflz59",
+        "name": "判斷是否執行結束",
+        "intro": "根據一定的條件，執行不同的分支。",
+        "avatar": "core/workflow/template/ifelse",
+        "flowNodeType": "ifElseNode",
+        "showStatus": true,
+        "position": {
+          "x": 4127.598997947211,
+          "y": 266.8413637678663
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "ifElseList",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": [
+              {
+                "condition": "AND",
+                "list": [
+                  {
+                    "variable": [
+                      "a2lqxASWi1vb",
+                      "nmBmGaARbKkl"
+                    ],
+                    "condition": "equalTo",
+                    "value": "true"
+                  }
+                ]
+              }
+            ],
+            "debugLabel": "",
+            "toolDescription": ""
+          }
+        ],
+        "outputs": [
+          {
+            "id": "ifElseResult",
+            "key": "ifElseResult",
+            "label": "workflow:judgment_result",
+            "valueType": "string",
+            "type": "static",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "nodeId": "a2lqxASWi1vb",
+        "name": "判斷是否執行結束",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "core/workflow/template/codeRun",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": 3477.215830836187,
+          "y": 191.17869154122482
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "workflow:these_variables_will_be_input_parameters_for_code_execution",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "function main({chunks, doc_chunks, currentChunk}){\n    let new_chunks = doc_chunks || chunks\n    const findIndex = new_chunks.findIndex((item) => item ===currentChunk)\n    \n    return {\n        isEnd: new_chunks.length-1 === findIndex,\n        i: findIndex + 1,\n    }\n}",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "arrayString",
+            "canEdit": true,
+            "key": "chunks",
+            "label": "chunks",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "rDzA1VxdpPIz",
+              "qLUQfhG0ILRX"
+            ]
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "currentChunk",
+            "label": "currentChunk",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "quYZgsW32ApA",
+              "eCp73lztAEGK"
+            ]
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "arrayString",
+            "canEdit": true,
+            "key": "doc_chunks",
+            "label": "doc_chunks",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "rhyUytTUBm19",
+              "qLUQfhG0ILRX"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "workflow:full_response_data",
+            "valueType": "object",
+            "type": "static",
+            "description": ""
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:execution_error",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點。變量名需要對應 return 的 key"
+          },
+          {
+            "id": "nmBmGaARbKkl",
+            "valueType": "boolean",
+            "type": "dynamic",
+            "key": "isEnd",
+            "label": "isEnd"
+          },
+          {
+            "id": "nqB98uKpq6Ig",
+            "valueType": "number",
+            "type": "dynamic",
+            "key": "i",
+            "label": "i"
+          }
+        ]
+      },
+      {
+        "nodeId": "quYZgsW32ApA",
+        "name": "格式化源文本塊",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "core/workflow/template/codeRun",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": -453.20482176291137,
+          "y": 277.1422839492036
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "workflow:these_variables_will_be_input_parameters_for_code_execution",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "function main({source_text_chunks, source_doc_text_chunks, i=0}){\n    let chunks = source_doc_text_chunks || source_text_chunks;\n    let before = chunks.slice(0, i).join(\"\");\n    let current = \" <TRANSLATE_THIS>\" + chunks[i] + \"</TRANSLATE_THIS>\";\n    let after = chunks.slice(i + 1).join(\"\");\n    let tagged_text = before + current + after;\n\n    return {\n        tagged_text,\n        chunk_to_translate: chunks[i],\n    }\n}",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "number",
+            "canEdit": true,
+            "key": "i",
+            "label": "i",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "a2lqxASWi1vb",
+              "nqB98uKpq6Ig"
+            ]
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "arrayString",
+            "canEdit": true,
+            "key": "source_text_chunks",
+            "label": "source_text_chunks",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "rDzA1VxdpPIz",
+              "qLUQfhG0ILRX"
+            ]
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "arrayString",
+            "canEdit": true,
+            "key": "source_doc_text_chunks",
+            "label": "source_doc_text_chunks",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "rhyUytTUBm19",
+              "qLUQfhG0ILRX"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "workflow:full_response_data",
+            "valueType": "object",
+            "type": "static",
+            "description": ""
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:execution_error",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點。變量名需要對應 return 的 key"
+          },
+          {
+            "id": "xhXu6sdEWBnF",
+            "valueType": "string",
+            "type": "dynamic",
+            "key": "tagged_text",
+            "label": "tagged_text"
+          },
+          {
+            "id": "eCp73lztAEGK",
+            "valueType": "string",
+            "type": "dynamic",
+            "key": "chunk_to_translate",
+            "label": "chunk_to_translate"
+          }
+        ]
+      },
+      {
+        "nodeId": "vlNHndpNuFXB",
+        "name": "取出翻譯文本",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "core/workflow/template/codeRun",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": 1614.87521037251,
+          "y": 105.52507717746244
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "workflow:these_variables_will_be_input_parameters_for_code_execution",
+            "editField": {
+              "key": true,
+              "valueType": true
+            },
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "function main({data1}){\n    const result = data1.split(\"```\").filter(item => !!item.trim())\n\n    if(result[result.length-1]) {\n        return {\n            result: result[result.length-1]\n        }\n    }\n\n    return {\n        result: '未截取到翻譯內容'\n    }\n}",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "data1",
+            "valueType": "string",
+            "label": "data1",
+            "renderTypeList": [
+              "reference"
+            ],
+            "description": "",
+            "canEdit": true,
+            "editField": {
+              "key": true,
+              "valueType": true
+            },
+            "value": [
+              "yjFO3YcM7KG2",
+              "answerText"
+            ],
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "workflow:full_response_data",
+            "valueType": "object",
+            "type": "static",
+            "description": ""
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:execution_error",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點。變量名需要對應 return 的 key"
+          },
+          {
+            "id": "qLUQfhG0ILRX",
+            "type": "dynamic",
+            "key": "result",
+            "valueType": "string",
+            "label": "result"
+          }
+        ]
+      },
+      {
+        "nodeId": "qlt9KJbbS9yJ",
+        "name": "判斷源語言和目標語言是否相同",
+        "intro": "根據一定的條件，執行不同的分支。",
+        "avatar": "core/workflow/template/ifelse",
+        "flowNodeType": "ifElseNode",
+        "showStatus": true,
+        "position": {
+          "x": -3489.136669871181,
+          "y": 500.7167825391806
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "ifElseList",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": [
+              {
+                "condition": "AND",
+                "list": [
+                  {
+                    "variable": [
+                      "frjbsrlnJJsR",
+                      "qLUQfhG0ILRX"
+                    ],
+                    "condition": "equalTo",
+                    "value": "false"
+                  }
+                ]
+              }
+            ],
+            "debugLabel": "",
+            "toolDescription": ""
+          }
+        ],
+        "outputs": [
+          {
+            "id": "ifElseResult",
+            "key": "ifElseResult",
+            "label": "workflow:judgment_result",
+            "valueType": "string",
+            "type": "static",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "nodeId": "frjbsrlnJJsR",
+        "name": "判斷源語言和目標語言是否相同",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "core/workflow/template/codeRun",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": -4015.234465113403,
+          "y": 286.93335454913375
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "workflow:these_variables_will_be_input_parameters_for_code_execution",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "function main({source_lang, target_lang}){\n    \n    return {\n        result: source_lang === target_lang\n    }\n}",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "source_lang",
+            "label": "source_lang",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "VARIABLE_NODE_ID",
+              "source_lang"
+            ]
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "target_lang",
+            "label": "target_lang",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "VARIABLE_NODE_ID",
+              "target_lang"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "workflow:full_response_data",
+            "valueType": "object",
+            "type": "static",
+            "description": ""
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:execution_error",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點。變量名需要對應 return 的 key"
+          },
+          {
+            "id": "qLUQfhG0ILRX",
+            "type": "dynamic",
+            "key": "result",
+            "valueType": "string",
+            "label": "result"
+          }
+        ],
+        "isFolded": false
+      },
+      {
+        "nodeId": "dFxrGZS3Wmnz",
+        "name": "提示源語言與目標語言相同",
+        "intro": "該模塊可以直接回複一段指定的內容。常用於引導、提示。非字符串內容傳入時，會轉成字符串進行輸出。",
+        "avatar": "core/workflow/template/reply",
+        "flowNodeType": "answerNode",
+        "position": {
+          "x": -2965.234667648691,
+          "y": 976.026813286592
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "text",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "valueType": "any",
+            "required": true,
+            "label": "core.module.input.label.Response content",
+            "description": "common:core.module.input.description.Response content",
+            "placeholder": "common:core.module.input.description.Response content",
+            "selectedTypeIndex": 0,
+            "value": "{{source_lang}} 無需再次翻譯為 {{target_lang}} ~",
+            "debugLabel": "",
+            "toolDescription": ""
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "rDzA1VxdpPIz",
+        "name": "切分文本",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "core/workflow/template/codeRun",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": -1023.4352731829587,
+          "y": 122.9539005059388
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "workflow:these_variables_will_be_input_parameters_for_code_execution",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "valueDesc": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "const MAX_HEADING_LENGTH = 7; // 最大標題長度\nconst MAX_HEADING_CONTENT_LENGTH = 200; // 最大標題內容長度\nconst MAX_HEADING_UNDERLINE_LENGTH = 200; // 最大標題下劃線長度\nconst MAX_HTML_HEADING_ATTRIBUTES_LENGTH = 100; // 最大HTML標題屬性長度\nconst MAX_LIST_ITEM_LENGTH = 200; // 最大列表项長度\nconst MAX_NESTED_LIST_ITEMS = 6; // 最大嵌套列表项數\nconst MAX_LIST_INDENT_SPACES = 7; // 最大列表縮進空格數\nconst MAX_BLOCKQUOTE_LINE_LENGTH = 200; // 最大塊引用行長度\nconst MAX_BLOCKQUOTE_LINES = 15; // 最大塊引用行數\nconst MAX_CODE_BLOCK_LENGTH = 1500; // 最大代碼塊長度\nconst MAX_CODE_LANGUAGE_LENGTH = 20; // 最大代碼語言長度\nconst MAX_INDENTED_CODE_LINES = 20; // 最大縮進代碼行數\nconst MAX_TABLE_CELL_LENGTH = 200; // 最大表格單元格長度\nconst MAX_TABLE_ROWS = 20; // 最大表格行數\nconst MAX_HTML_TABLE_LENGTH = 2000; // 最大HTML表格長度\nconst MIN_HORIZONTAL_RULE_LENGTH = 3; // 最小水平分隔線長度\nconst MAX_SENTENCE_LENGTH = 400; // 最大句子長度\nconst MAX_QUOTED_TEXT_LENGTH = 300; // 最大引用文本長度\nconst MAX_PARENTHETICAL_CONTENT_LENGTH = 200; // 最大括號內容長度\nconst MAX_NESTED_PARENTHESES = 5; // 最大嵌套括號數\nconst MAX_MATH_INLINE_LENGTH = 100; // 最大行內數學公式長度\nconst MAX_MATH_BLOCK_LENGTH = 500; // 最大數學公式塊長度\nconst MAX_PARAGRAPH_LENGTH = 1000; // 最大段落長度\nconst MAX_STANDALONE_LINE_LENGTH = 800; // 最大獨立行長度\nconst MAX_HTML_TAG_ATTRIBUTES_LENGTH = 100; // 最大HTML標簽屬性長度\nconst MAX_HTML_TAG_CONTENT_LENGTH = 1000; // 最大HTML標簽內容長度\nconst LOOKAHEAD_RANGE = 100;  // 向前查找句子边界的字符數\n\nconst AVOID_AT_START = `[\\\\s\\\\]})>,']`; // 避免在開頭匹配的字符\nconst PUNCTUATION = `[.!?…]|\\\\.{3}|[\\\\u2026\\\\u2047-\\\\u2049]|[\\\\p{Emoji_Presentation}\\\\p{Extended_Pictographic}]`; // 標點符號\nconst QUOTE_END = `(?:'(?=\\`)|''(?=\\`\\`))`; // 引號結束\nconst SENTENCE_END = `(?:${PUNCTUATION}(?<!${AVOID_AT_START}(?=${PUNCTUATION}))|${QUOTE_END})(?=\\\\S|$)`; // 句子結束\nconst SENTENCE_BOUNDARY = `(?:${SENTENCE_END}|(?=[\\\\r\\\\n]|$))`; // 句子边界\nconst LOOKAHEAD_PATTERN = `(?:(?!${SENTENCE_END}).){1,${LOOKAHEAD_RANGE}}${SENTENCE_END}`; // 向前查找句子結束的模式\nconst NOT_PUNCTUATION_SPACE = `(?!${PUNCTUATION}\\\\s)`; // 非標點符號空格\nconst SENTENCE_PATTERN = `${NOT_PUNCTUATION_SPACE}(?:[^\\\\r\\\\n]{1,{MAX_LENGTH}}${SENTENCE_BOUNDARY}|[^\\\\r\\\\n]{1,{MAX_LENGTH}}(?=${PUNCTUATION}|${QUOTE_END})(?:${LOOKAHEAD_PATTERN})?)${AVOID_AT_START}*`; // 句子模式\n\nconst regex = new RegExp(\n  \"(\" +\n  // 1. Headings (Setext-style, Markdown, and HTML-style, with length constraints)\n  `(?:^(?:[#*=-]{1,${MAX_HEADING_LENGTH}}|\\\\w[^\\\\r\\\\n]{0,${MAX_HEADING_CONTENT_LENGTH}}\\\\r?\\\\n[-=]{2,${MAX_HEADING_UNDERLINE_LENGTH}}|<h[1-6][^>]{0,${MAX_HTML_HEADING_ATTRIBUTES_LENGTH}}>)[^\\\\r\\\\n]{1,${MAX_HEADING_CONTENT_LENGTH}}(?:</h[1-6]>)?(?:\\\\r?\\\\n|$))` +\n  \"|\" +\n  // New pattern for citations\n  `(?:\\\\[[0-9]+\\\\][^\\\\r\\\\n]{1,${MAX_STANDALONE_LINE_LENGTH}})` +\n  \"|\" +\n  // 2. List items (bulleted, numbered, lettered, or task lists, including nested, up to three levels, with length constraints)\n  `(?:(?:^|\\\\r?\\\\n)[ \\\\t]{0,3}(?:[-*+•]|\\\\d{1,3}\\\\.\\\\w\\\\.|\\\\[[ xX]\\\\])[ \\\\t]+${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_LIST_ITEM_LENGTH))}` +\n  `(?:(?:\\\\r?\\\\n[ \\\\t]{2,5}(?:[-*+•]|\\\\d{1,3}\\\\.\\\\w\\\\.|\\\\[[ xX]\\\\])[ \\\\t]+${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_LIST_ITEM_LENGTH))}){0,${MAX_NESTED_LIST_ITEMS}}` +\n  `(?:\\\\r?\\\\n[ \\\\t]{4,${MAX_LIST_INDENT_SPACES}}(?:[-*+•]|\\\\d{1,3}\\\\.\\\\w\\\\.|\\\\[[ xX]\\\\])[ \\\\t]+${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_LIST_ITEM_LENGTH))}){0,${MAX_NESTED_LIST_ITEMS}})?)` +\n  \"|\" +\n  // 3. Block quotes (including nested quotes and citations, up to three levels, with length constraints)\n  `(?:(?:^>(?:>|\\\\s{2,}){0,2}${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_BLOCKQUOTE_LINE_LENGTH))}\\\\r?\\\\n?){1,${MAX_BLOCKQUOTE_LINES}})` +\n  \"|\" +\n  // 4. Code blocks (fenced, indented, or HTML pre/code tags, with length constraints)\n  `(?:(?:^|\\\\r?\\\\n)(?:\\`\\`\\`|~~~)(?:\\\\w{0,${MAX_CODE_LANGUAGE_LENGTH}})?\\\\r?\\\\n[\\\\s\\\\S]{0,${MAX_CODE_BLOCK_LENGTH}}?(?:\\`\\`\\`|~~~)\\\\r?\\\\n?` +\n  `|(?:(?:^|\\\\r?\\\\n)(?: {4}|\\\\t)[^\\\\r\\\\n]{0,${MAX_LIST_ITEM_LENGTH}}(?:\\\\r?\\\\n(?: {4}|\\\\t)[^\\\\r\\\\n]{0,${MAX_LIST_ITEM_LENGTH}}){0,${MAX_INDENTED_CODE_LINES}}\\\\r?\\\\n?)` +\n  `|(?:<pre>(?:<code>)?[\\\\s\\\\S]{0,${MAX_CODE_BLOCK_LENGTH}}?(?:</code>)?</pre>))` +\n  \"|\" +\n  // 5. Tables (Markdown, grid tables, and HTML tables, with length constraints)\n  `(?:(?:^|\\\\r?\\\\n)(?:\\\\|[^\\\\r\\\\n]{0,${MAX_TABLE_CELL_LENGTH}}\\\\|(?:\\\\r?\\\\n\\\\|[-:]{1,${MAX_TABLE_CELL_LENGTH}}\\\\|){0,1}(?:\\\\r?\\\\n\\\\|[^\\\\r\\\\n]{0,${MAX_TABLE_CELL_LENGTH}}\\\\|){0,${MAX_TABLE_ROWS}}` +\n  `|<table>[\\\\s\\\\S]{0,${MAX_HTML_TABLE_LENGTH}}?</table>))` +\n  \"|\" +\n  // 6. Horizontal rules (Markdown and HTML hr tag)\n  `(?:^(?:[-*_]){${MIN_HORIZONTAL_RULE_LENGTH},}\\\\s*$|<hr\\\\s*/?>)` +\n  \"|\" +\n  // 10. Standalone lines or phrases (including single-line blocks and HTML elements, with length constraints)\n  `(?!${AVOID_AT_START})(?:^(?:<[a-zA-Z][^>]{0,${MAX_HTML_TAG_ATTRIBUTES_LENGTH}}>)?${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_STANDALONE_LINE_LENGTH))}(?:</[a-zA-Z]+>)?(?:\\\\r?\\\\n|$))` +\n  \"|\" +\n  // 7. Sentences or phrases ending with punctuation (including ellipsis and Unicode punctuation)\n  `(?!${AVOID_AT_START})${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_SENTENCE_LENGTH))}` +\n  \"|\" +\n  // 8. Quoted text, parenthetical phrases, or bracketed content (with length constraints)\n  \"(?:\" +\n  `(?<!\\\\w)\\\"\\\"\\\"[^\\\"]{0,${MAX_QUOTED_TEXT_LENGTH}}\\\"\\\"\\\"(?!\\\\w)` +\n  `|(?<!\\\\w)(?:['\\\"\\`'\"])[^\\\\r\\\\n]{0,${MAX_QUOTED_TEXT_LENGTH}}\\\\1(?!\\\\w)` +\n  `|(?<!\\\\w)\\`[^\\\\r\\\\n]{0,${MAX_QUOTED_TEXT_LENGTH}}'(?!\\\\w)` +\n  `|(?<!\\\\w)\\`\\`[^\\\\r\\\\n]{0,${MAX_QUOTED_TEXT_LENGTH}}''(?!\\\\w)` +\n  `|\\\\([^\\\\r\\\\n()]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}(?:\\\\([^\\\\r\\\\n()]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}\\\\)[^\\\\r\\\\n()]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}){0,${MAX_NESTED_PARENTHESES}}\\\\)` +\n  `|\\\\[[^\\\\r\\\\n\\\\[\\\\]]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}(?:\\\\[[^\\\\r\\\\n\\\\[\\\\]]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}\\\\][^\\\\r\\\\n\\\\[\\\\]]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}){0,${MAX_NESTED_PARENTHESES}}\\\\]` +\n  `|\\\\$[^\\\\r\\\\n$]{0,${MAX_MATH_INLINE_LENGTH}}\\\\$` +\n  `|\\`[^\\`\\\\r\\\\n]{0,${MAX_MATH_INLINE_LENGTH}}\\`` +\n  \")\" +\n  \"|\" +\n  // 9. Paragraphs (with length constraints)\n  `(?!${AVOID_AT_START})(?:(?:^|\\\\r?\\\\n\\\\r?\\\\n)(?:<p>)?${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_PARAGRAPH_LENGTH))}(?:</p>)?(?=\\\\r?\\\\n\\\\r?\\\\n|$))` +\n  \"|\" +\n  // 11. HTML-like tags and their content (including self-closing tags and attributes, with length constraints)\n  `(?:<[a-zA-Z][^>]{0,${MAX_HTML_TAG_ATTRIBUTES_LENGTH}}(?:>[\\\\s\\\\S]{0,${MAX_HTML_TAG_CONTENT_LENGTH}}?</[a-zA-Z]+>|\\\\s*/>))` +\n  \"|\" +\n  // 12. LaTeX-style math expressions (inline and block, with length constraints)\n  `(?:(?:\\\\$\\\\$[\\\\s\\\\S]{0,${MAX_MATH_BLOCK_LENGTH}}?\\\\$\\\\$)|(?:\\\\$[^\\\\$\\\\r\\\\n]{0,${MAX_MATH_INLINE_LENGTH}}\\\\$))` +\n  \"|\" +\n  // 14. Fallback for any remaining content (with length constraints)\n  `(?!${AVOID_AT_START})${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_STANDALONE_LINE_LENGTH))}` +\n  \")\",\n  \"gmu\"\n);\n\nfunction main({text}){\n  const chunks = [];\n  let currentChunk = '';\n  const tokens = countToken(text)\n\n  const matches = text.match(regex);\n  if (matches) {\n    matches.forEach((match) => {\n      if (currentChunk.length + match.length <= 1000) {\n        currentChunk += match;\n      } else {\n        if (currentChunk) {\n          chunks.push(currentChunk);\n        }\n        currentChunk = match;\n      }\n    });\n    if (currentChunk) {\n      chunks.push(currentChunk);\n    }\n  }\n\n  return {chunks, tokens};\n}\n\n",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "text",
+            "label": "text",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "448745",
+              "userChatInput"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "workflow:full_response_data",
+            "valueType": "object",
+            "type": "static",
+            "description": ""
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:execution_error",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點。變量名需要對應 return 的 key",
+            "valueDesc": ""
+          },
+          {
+            "id": "qLUQfhG0ILRX",
+            "type": "dynamic",
+            "key": "chunks",
+            "valueType": "arrayString",
+            "label": "chunks",
+            "valueDesc": "",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "nodeId": "qwKPaLWbYTLa",
+        "name": "輸出翻譯結果",
+        "intro": "該模塊可以直接回複一段指定的內容。常用於引導、提示。非字符串內容傳入時，會轉成字符串進行輸出。",
+        "avatar": "core/workflow/template/reply",
+        "flowNodeType": "answerNode",
+        "position": {
+          "x": 2771.2891802720287,
+          "y": 320.5042731766072
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "text",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "valueType": "any",
+            "required": true,
+            "label": "回複的內容",
+            "description": "common:core.module.input.description.Response content",
+            "placeholder": "common:core.module.input.description.Response content",
+            "valueDesc": "",
+            "debugLabel": "",
+            "toolDescription": "",
+            "value": "{{$uow83rLCI2pI.qLUQfhG0ILRX$}}"
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "nLBlOh6lWxkY",
+        "name": "搜索詞庫",
+        "intro": "調用“語義檢索”和“全文檢索”能力，從“知識庫”中查找可能與問題相關的參考內容",
+        "avatar": "core/workflow/template/datasetSearch",
+        "flowNodeType": "datasetSearchNode",
+        "showStatus": true,
+        "position": {
+          "x": 164.44155974241983,
+          "y": 187.52507717746244
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "datasets",
+            "renderTypeList": [
+              "selectDataset",
+              "reference"
+            ],
+            "label": "選擇知識庫",
+            "value": [],
+            "valueType": "selectDataset",
+            "required": true,
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "similarity",
+            "renderTypeList": [
+              "selectDatasetParamsModal"
+            ],
+            "label": "",
+            "value": 0.2,
+            "valueType": "number",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "limit",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 11000,
+            "valueType": "number",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "searchMode",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "value": "embedding",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "usingReRank",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "boolean",
+            "value": false,
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "datasetSearchUsingExtensionQuery",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "boolean",
+            "value": true,
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "datasetSearchExtensionModel",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": "",
+            "value": "gpt-5"
+          },
+          {
+            "key": "datasetSearchExtensionBg",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string",
+            "value": "需要翻譯一段特定的文本，其中會使用到大量專有詞匯，需要從詞庫中進行查詢",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "需要檢索的內容",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "selectedTypeIndex": 1,
+            "value": "<TRANSLATE></TRANASLATE>中是你要翻譯的原文，其中包含特定術語，請查找詞庫中術語對應的翻譯\n\n<TRANSLATE>\n\n{{$quYZgsW32ApA.eCp73lztAEGK$}}\n\n</TRANASLATE>"
+          },
+          {
+            "key": "collectionFilterMatch",
+            "renderTypeList": [
+              "JSONEditor",
+              "reference"
+            ],
+            "label": "集合元數據過滤",
+            "valueType": "object",
+            "isPro": true,
+            "description": "workflow:filter_description",
+            "valueDesc": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          }
+        ],
+        "outputs": [
+          {
+            "id": "quoteQA",
+            "key": "quoteQA",
+            "label": "common:core.module.Dataset quote.label",
+            "description": "特殊數組格式，搜索結果為空時，返回空數組。",
+            "type": "static",
+            "valueType": "datasetQuote",
+            "valueDesc": "{\n  id: string;\n  datasetId: string;\n  collectionId: string;\n  sourceName: string;\n  sourceId?: string;\n  q: string;\n  a: string\n}[]"
+          }
+        ]
+      },
+      {
+        "nodeId": "bdjAb5B2U1DQ",
+        "name": "指定回複#3",
+        "intro": "該模塊可以直接回複一段指定的內容。常用於引導、提示。非字符串內容傳入時，會轉成字符串進行輸出。",
+        "avatar": "core/workflow/template/reply",
+        "flowNodeType": "answerNode",
+        "position": {
+          "x": 5144.978517483216,
+          "y": 401.52507717746244
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "text",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "valueType": "any",
+            "required": true,
+            "label": "回複的內容",
+            "description": "common:core.module.input.description.Response content",
+            "placeholder": "common:core.module.input.description.Response content",
+            "valueDesc": "",
+            "debugLabel": "",
+            "toolDescription": "",
+            "value": "*** 文档翻譯完成！***"
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "mt7GlCIwbO9I",
+        "name": "判斷是否上傳了文件",
+        "intro": "根據一定的條件，執行不同的分支。",
+        "avatar": "core/workflow/template/ifelse",
+        "flowNodeType": "ifElseNode",
+        "showStatus": true,
+        "position": {
+          "x": -2277.8211533688936,
+          "y": 608.6422839492036
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "ifElseList",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": [
+              {
+                "condition": "AND",
+                "list": [
+                  {
+                    "variable": [
+                      "448745",
+                      "userFiles"
+                    ],
+                    "condition": "isEmpty"
+                  }
+                ]
+              }
+            ],
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          }
+        ],
+        "outputs": [
+          {
+            "id": "ifElseResult",
+            "key": "ifElseResult",
+            "label": "workflow:judgment_result",
+            "valueType": "string",
+            "type": "static",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "nodeId": "rhyUytTUBm19",
+        "name": "切分文档文本",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "core/workflow/template/codeRun",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": -1023.4352731829587,
+          "y": 959.6422839492036
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "workflow:these_variables_will_be_input_parameters_for_code_execution",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "valueDesc": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "const MAX_HEADING_LENGTH = 7; // 最大標題長度\nconst MAX_HEADING_CONTENT_LENGTH = 200; // 最大標題內容長度\nconst MAX_HEADING_UNDERLINE_LENGTH = 200; // 最大標題下劃線長度\nconst MAX_HTML_HEADING_ATTRIBUTES_LENGTH = 100; // 最大HTML標題屬性長度\nconst MAX_LIST_ITEM_LENGTH = 200; // 最大列表项長度\nconst MAX_NESTED_LIST_ITEMS = 6; // 最大嵌套列表项數\nconst MAX_LIST_INDENT_SPACES = 7; // 最大列表縮進空格數\nconst MAX_BLOCKQUOTE_LINE_LENGTH = 200; // 最大塊引用行長度\nconst MAX_BLOCKQUOTE_LINES = 15; // 最大塊引用行數\nconst MAX_CODE_BLOCK_LENGTH = 1500; // 最大代碼塊長度\nconst MAX_CODE_LANGUAGE_LENGTH = 20; // 最大代碼語言長度\nconst MAX_INDENTED_CODE_LINES = 20; // 最大縮進代碼行數\nconst MAX_TABLE_CELL_LENGTH = 200; // 最大表格單元格長度\nconst MAX_TABLE_ROWS = 20; // 最大表格行數\nconst MAX_HTML_TABLE_LENGTH = 2000; // 最大HTML表格長度\nconst MIN_HORIZONTAL_RULE_LENGTH = 3; // 最小水平分隔線長度\nconst MAX_SENTENCE_LENGTH = 400; // 最大句子長度\nconst MAX_QUOTED_TEXT_LENGTH = 300; // 最大引用文本長度\nconst MAX_PARENTHETICAL_CONTENT_LENGTH = 200; // 最大括號內容長度\nconst MAX_NESTED_PARENTHESES = 5; // 最大嵌套括號數\nconst MAX_MATH_INLINE_LENGTH = 100; // 最大行內數學公式長度\nconst MAX_MATH_BLOCK_LENGTH = 500; // 最大數學公式塊長度\nconst MAX_PARAGRAPH_LENGTH = 1000; // 最大段落長度\nconst MAX_STANDALONE_LINE_LENGTH = 800; // 最大獨立行長度\nconst MAX_HTML_TAG_ATTRIBUTES_LENGTH = 100; // 最大HTML標簽屬性長度\nconst MAX_HTML_TAG_CONTENT_LENGTH = 1000; // 最大HTML標簽內容長度\nconst LOOKAHEAD_RANGE = 100;  // 向前查找句子边界的字符數\n\nconst AVOID_AT_START = `[\\\\s\\\\]})>,']`; // 避免在開頭匹配的字符\nconst PUNCTUATION = `[.!?…]|\\\\.{3}|[\\\\u2026\\\\u2047-\\\\u2049]|[\\\\p{Emoji_Presentation}\\\\p{Extended_Pictographic}]`; // 標點符號\nconst QUOTE_END = `(?:'(?=\\`)|''(?=\\`\\`))`; // 引號結束\nconst SENTENCE_END = `(?:${PUNCTUATION}(?<!${AVOID_AT_START}(?=${PUNCTUATION}))|${QUOTE_END})(?=\\\\S|$)`; // 句子結束\nconst SENTENCE_BOUNDARY = `(?:${SENTENCE_END}|(?=[\\\\r\\\\n]|$))`; // 句子边界\nconst LOOKAHEAD_PATTERN = `(?:(?!${SENTENCE_END}).){1,${LOOKAHEAD_RANGE}}${SENTENCE_END}`; // 向前查找句子結束的模式\nconst NOT_PUNCTUATION_SPACE = `(?!${PUNCTUATION}\\\\s)`; // 非標點符號空格\nconst SENTENCE_PATTERN = `${NOT_PUNCTUATION_SPACE}(?:[^\\\\r\\\\n]{1,{MAX_LENGTH}}${SENTENCE_BOUNDARY}|[^\\\\r\\\\n]{1,{MAX_LENGTH}}(?=${PUNCTUATION}|${QUOTE_END})(?:${LOOKAHEAD_PATTERN})?)${AVOID_AT_START}*`; // 句子模式\n\nconst regex = new RegExp(\n  \"(\" +\n  // 1. Headings (Setext-style, Markdown, and HTML-style, with length constraints)\n  `(?:^(?:[#*=-]{1,${MAX_HEADING_LENGTH}}|\\\\w[^\\\\r\\\\n]{0,${MAX_HEADING_CONTENT_LENGTH}}\\\\r?\\\\n[-=]{2,${MAX_HEADING_UNDERLINE_LENGTH}}|<h[1-6][^>]{0,${MAX_HTML_HEADING_ATTRIBUTES_LENGTH}}>)[^\\\\r\\\\n]{1,${MAX_HEADING_CONTENT_LENGTH}}(?:</h[1-6]>)?(?:\\\\r?\\\\n|$))` +\n  \"|\" +\n  // New pattern for citations\n  `(?:\\\\[[0-9]+\\\\][^\\\\r\\\\n]{1,${MAX_STANDALONE_LINE_LENGTH}})` +\n  \"|\" +\n  // 2. List items (bulleted, numbered, lettered, or task lists, including nested, up to three levels, with length constraints)\n  `(?:(?:^|\\\\r?\\\\n)[ \\\\t]{0,3}(?:[-*+•]|\\\\d{1,3}\\\\.\\\\w\\\\.|\\\\[[ xX]\\\\])[ \\\\t]+${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_LIST_ITEM_LENGTH))}` +\n  `(?:(?:\\\\r?\\\\n[ \\\\t]{2,5}(?:[-*+•]|\\\\d{1,3}\\\\.\\\\w\\\\.|\\\\[[ xX]\\\\])[ \\\\t]+${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_LIST_ITEM_LENGTH))}){0,${MAX_NESTED_LIST_ITEMS}}` +\n  `(?:\\\\r?\\\\n[ \\\\t]{4,${MAX_LIST_INDENT_SPACES}}(?:[-*+•]|\\\\d{1,3}\\\\.\\\\w\\\\.|\\\\[[ xX]\\\\])[ \\\\t]+${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_LIST_ITEM_LENGTH))}){0,${MAX_NESTED_LIST_ITEMS}})?)` +\n  \"|\" +\n  // 3. Block quotes (including nested quotes and citations, up to three levels, with length constraints)\n  `(?:(?:^>(?:>|\\\\s{2,}){0,2}${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_BLOCKQUOTE_LINE_LENGTH))}\\\\r?\\\\n?){1,${MAX_BLOCKQUOTE_LINES}})` +\n  \"|\" +\n  // 4. Code blocks (fenced, indented, or HTML pre/code tags, with length constraints)\n  `(?:(?:^|\\\\r?\\\\n)(?:\\`\\`\\`|~~~)(?:\\\\w{0,${MAX_CODE_LANGUAGE_LENGTH}})?\\\\r?\\\\n[\\\\s\\\\S]{0,${MAX_CODE_BLOCK_LENGTH}}?(?:\\`\\`\\`|~~~)\\\\r?\\\\n?` +\n  `|(?:(?:^|\\\\r?\\\\n)(?: {4}|\\\\t)[^\\\\r\\\\n]{0,${MAX_LIST_ITEM_LENGTH}}(?:\\\\r?\\\\n(?: {4}|\\\\t)[^\\\\r\\\\n]{0,${MAX_LIST_ITEM_LENGTH}}){0,${MAX_INDENTED_CODE_LINES}}\\\\r?\\\\n?)` +\n  `|(?:<pre>(?:<code>)?[\\\\s\\\\S]{0,${MAX_CODE_BLOCK_LENGTH}}?(?:</code>)?</pre>))` +\n  \"|\" +\n  // 5. Tables (Markdown, grid tables, and HTML tables, with length constraints)\n  `(?:(?:^|\\\\r?\\\\n)(?:\\\\|[^\\\\r\\\\n]{0,${MAX_TABLE_CELL_LENGTH}}\\\\|(?:\\\\r?\\\\n\\\\|[-:]{1,${MAX_TABLE_CELL_LENGTH}}\\\\|){0,1}(?:\\\\r?\\\\n\\\\|[^\\\\r\\\\n]{0,${MAX_TABLE_CELL_LENGTH}}\\\\|){0,${MAX_TABLE_ROWS}}` +\n  `|<table>[\\\\s\\\\S]{0,${MAX_HTML_TABLE_LENGTH}}?</table>))` +\n  \"|\" +\n  // 6. Horizontal rules (Markdown and HTML hr tag)\n  `(?:^(?:[-*_]){${MIN_HORIZONTAL_RULE_LENGTH},}\\\\s*$|<hr\\\\s*/?>)` +\n  \"|\" +\n  // 10. Standalone lines or phrases (including single-line blocks and HTML elements, with length constraints)\n  `(?!${AVOID_AT_START})(?:^(?:<[a-zA-Z][^>]{0,${MAX_HTML_TAG_ATTRIBUTES_LENGTH}}>)?${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_STANDALONE_LINE_LENGTH))}(?:</[a-zA-Z]+>)?(?:\\\\r?\\\\n|$))` +\n  \"|\" +\n  // 7. Sentences or phrases ending with punctuation (including ellipsis and Unicode punctuation)\n  `(?!${AVOID_AT_START})${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_SENTENCE_LENGTH))}` +\n  \"|\" +\n  // 8. Quoted text, parenthetical phrases, or bracketed content (with length constraints)\n  \"(?:\" +\n  `(?<!\\\\w)\\\"\\\"\\\"[^\\\"]{0,${MAX_QUOTED_TEXT_LENGTH}}\\\"\\\"\\\"(?!\\\\w)` +\n  `|(?<!\\\\w)(?:['\\\"\\`'\"])[^\\\\r\\\\n]{0,${MAX_QUOTED_TEXT_LENGTH}}\\\\1(?!\\\\w)` +\n  `|(?<!\\\\w)\\`[^\\\\r\\\\n]{0,${MAX_QUOTED_TEXT_LENGTH}}'(?!\\\\w)` +\n  `|(?<!\\\\w)\\`\\`[^\\\\r\\\\n]{0,${MAX_QUOTED_TEXT_LENGTH}}''(?!\\\\w)` +\n  `|\\\\([^\\\\r\\\\n()]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}(?:\\\\([^\\\\r\\\\n()]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}\\\\)[^\\\\r\\\\n()]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}){0,${MAX_NESTED_PARENTHESES}}\\\\)` +\n  `|\\\\[[^\\\\r\\\\n\\\\[\\\\]]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}(?:\\\\[[^\\\\r\\\\n\\\\[\\\\]]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}\\\\][^\\\\r\\\\n\\\\[\\\\]]{0,${MAX_PARENTHETICAL_CONTENT_LENGTH}}){0,${MAX_NESTED_PARENTHESES}}\\\\]` +\n  `|\\\\$[^\\\\r\\\\n$]{0,${MAX_MATH_INLINE_LENGTH}}\\\\$` +\n  `|\\`[^\\`\\\\r\\\\n]{0,${MAX_MATH_INLINE_LENGTH}}\\`` +\n  \")\" +\n  \"|\" +\n  // 9. Paragraphs (with length constraints)\n  `(?!${AVOID_AT_START})(?:(?:^|\\\\r?\\\\n\\\\r?\\\\n)(?:<p>)?${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_PARAGRAPH_LENGTH))}(?:</p>)?(?=\\\\r?\\\\n\\\\r?\\\\n|$))` +\n  \"|\" +\n  // 11. HTML-like tags and their content (including self-closing tags and attributes, with length constraints)\n  `(?:<[a-zA-Z][^>]{0,${MAX_HTML_TAG_ATTRIBUTES_LENGTH}}(?:>[\\\\s\\\\S]{0,${MAX_HTML_TAG_CONTENT_LENGTH}}?</[a-zA-Z]+>|\\\\s*/>))` +\n  \"|\" +\n  // 12. LaTeX-style math expressions (inline and block, with length constraints)\n  `(?:(?:\\\\$\\\\$[\\\\s\\\\S]{0,${MAX_MATH_BLOCK_LENGTH}}?\\\\$\\\\$)|(?:\\\\$[^\\\\$\\\\r\\\\n]{0,${MAX_MATH_INLINE_LENGTH}}\\\\$))` +\n  \"|\" +\n  // 14. Fallback for any remaining content (with length constraints)\n  `(?!${AVOID_AT_START})${SENTENCE_PATTERN.replace(/{MAX_LENGTH}/g, String(MAX_STANDALONE_LINE_LENGTH))}` +\n  \")\",\n  \"gmu\"\n);\n\nfunction main({text}){\n  const chunks = [];\n  let currentChunk = '';\n  const tokens = countToken(text)\n\n  const matches = text.match(regex);\n  if (matches) {\n    matches.forEach((match) => {\n      if (currentChunk.length + match.length <= 1000) {\n        currentChunk += match;\n      } else {\n        if (currentChunk) {\n          chunks.push(currentChunk);\n        }\n        currentChunk = match;\n      }\n    });\n    if (currentChunk) {\n      chunks.push(currentChunk);\n    }\n  }\n\n  return {chunks, tokens};\n}\n\n",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "text",
+            "label": "text",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "dtUmoUtTKfpM",
+              "system_text"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "workflow:full_response_data",
+            "valueType": "object",
+            "type": "static",
+            "description": ""
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:execution_error",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點。變量名需要對應 return 的 key",
+            "valueDesc": ""
+          },
+          {
+            "id": "qLUQfhG0ILRX",
+            "type": "dynamic",
+            "key": "chunks",
+            "valueType": "arrayString",
+            "label": "chunks",
+            "valueDesc": "",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "nodeId": "dtUmoUtTKfpM",
+        "name": "文档解析",
+        "intro": "解析對話中所有上傳的文档，并返回對應文档內容",
+        "avatar": "core/workflow/template/readFiles",
+        "flowNodeType": "readFiles",
+        "showStatus": true,
+        "position": {
+          "x": -1503.9824853456694,
+          "y": 1031.2341899921714
+        },
+        "version": "489",
+        "inputs": [
+          {
+            "key": "fileUrlList",
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "arrayString",
+            "label": "文档鏈接",
+            "required": true,
+            "value": [
+              "448745",
+              "userFiles"
+            ],
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_text",
+            "key": "system_text",
+            "label": "app:workflow.read_files_result",
+            "description": "文档原文，由文件名和文档內容組成，多個文件之間通過横線隔開。",
+            "valueType": "string",
+            "type": "static"
+          }
+        ]
+      },
+      {
+        "nodeId": "uow83rLCI2pI",
+        "name": "格式化中文翻譯",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "core/workflow/template/codeRun",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": 2205.3511517635047,
+          "y": 121.1512729428531
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "workflow:these_variables_will_be_input_parameters_for_code_execution",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "valueDesc": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "function main({target_lang, source_text}) {\n  let text = source_text;\n\n  if (target_lang === '簡體中文' || target_lang === '繁體中文') {\n    // 存儲代碼塊內容\n    const codeBlocks = [];\n    let text = source_text.replace(/```[\\s\\S]*?```/g, (match) => {\n      codeBlocks.push(match);\n      return `__CODE_BLOCK_${codeBlocks.length - 1}__`;\n    });\n\n    // 替換成對的英文引號\n    text = text.replace(/\"(.*?)\"/g, '“$1”');\n\n    // 保護 Markdown 鏈接格式中的括號\n    text = text.replace(/\\[(.*?)\\]\\((.*?)\\)/g, function(match) {\n      return match.replace(/\\(/g, 'LEFTPAREN')\n                 .replace(/\\)/g, 'RIGHTPAREN');\n    });\n\n    // 替換成對的英文括號\n    text = text.replace(/\\((.*?)\\)/g, '（$1）');\n\n    // 恢複被保護的 Markdown 鏈接括號\n    text = text.replace(/LEFTPAREN/g, '(')\n             .replace(/RIGHTPAREN/g, ')');\n\n    // 更新句號替換逻輯，增加對版本號和URL的保護\n    text = text.replace(/(\\d+)\\.(\\d+)\\.(\\d+)/g, '$1DOT$2DOT$3') // 保護版本號 (如 16.2.1)\n               .replace(/(\\d)\\.(\\d)/g, '$1DOT$2') // 臨時替換小數點\n               .replace(/([a-zA-Z])\\.([a-zA-Z])/g, '$1DOT$2') // 臨時替換縮寫中的句號\n               .replace(/([a-zA-Z])\\.(\\d)/g, '$1DOT$2') // 臨時替換字母與數字之間的句號\n               .replace(/(\\d)\\.([a-zA-Z])/g, '$1DOT$2') // 臨時替換數字與字母之間的句號\n               .replace(/([a-zA-Z])\\./g, '$1DOT') // 臨時替換字母後面的句號（如 a.）\n               .replace(/https?:/g, 'HTTPCOLON') // 保護 URL 中的冒號\n               .replace(/\\./g, '。') // 替換其他句號\n               .replace(/DOT/g, '.') // 恢複被保護的句號\n               .replace(/HTTPCOLON/g, 'http:'); // 恢複 URL 中的冒號\n\n    // 替換英文逗號，但不替換數字中的逗號\n    text = text.replace(/(\\d),(\\d)/g, '$1COMMA$2') // 臨時替換數字中的逗號\n               .replace(/,/g, '，') // 替換其他逗號\n               .replace(/COMMA/g, ','); // 恢複數字中的逗號\n\n    // 替換其他常見符號\n    const replacements = {\n      '!': '！',\n      '?': '？',\n      ';': '；',\n    };\n\n    for (const [key, value] of Object.entries(replacements)) {\n      text = text.replace(new RegExp(`\\\\${key}`, 'g'), value);\n    }\n\n    // 在中文和英文字符之間添加空格\n    // 中文字符範圍: \\u4e00-\\u9fa5\n    // 英文字符範圍: a-zA-Z0-9\n    text = text.replace(/([\\u4e00-\\u9fa5])([a-zA-Z0-9])/g, '$1 $2')\n               .replace(/([a-zA-Z0-9])([\\u4e00-\\u9fa5])/g, '$1 $2');\n\n    // 恢複代碼塊\n    text = text.replace(/__CODE_BLOCK_(\\d+)__/g, (_, index) => codeBlocks[index]);\n  }\n\n  return {\n    text\n  };\n}",
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "source_text",
+            "label": "source_text",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "valueDesc": "",
+            "description": "",
+            "debugLabel": "",
+            "toolDescription": "",
+            "value": [
+              "vlNHndpNuFXB",
+              "qLUQfhG0ILRX"
+            ]
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "target_lang",
+            "label": "target_lang",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "VARIABLE_NODE_ID",
+              "target_lang"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "workflow:full_response_data",
+            "valueType": "object",
+            "type": "static",
+            "description": ""
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:execution_error",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點。變量名需要對應 return 的 key",
+            "valueDesc": ""
+          },
+          {
+            "id": "qLUQfhG0ILRX",
+            "type": "dynamic",
+            "key": "text",
+            "valueType": "string",
+            "label": "text",
+            "valueDesc": "",
+            "description": ""
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "a2lqxASWi1vb",
+        "target": "w4heEpNflz59",
+        "sourceHandle": "a2lqxASWi1vb-source-right",
+        "targetHandle": "w4heEpNflz59-target-left"
+      },
+      {
+        "source": "w4heEpNflz59",
+        "target": "quYZgsW32ApA",
+        "sourceHandle": "w4heEpNflz59-source-ELSE",
+        "targetHandle": "quYZgsW32ApA-target-left"
+      },
+      {
+        "source": "448745",
+        "target": "frjbsrlnJJsR",
+        "sourceHandle": "448745-source-right",
+        "targetHandle": "frjbsrlnJJsR-target-left"
+      },
+      {
+        "source": "frjbsrlnJJsR",
+        "target": "qlt9KJbbS9yJ",
+        "sourceHandle": "frjbsrlnJJsR-source-right",
+        "targetHandle": "qlt9KJbbS9yJ-target-left"
+      },
+      {
+        "source": "qlt9KJbbS9yJ",
+        "target": "dFxrGZS3Wmnz",
+        "sourceHandle": "qlt9KJbbS9yJ-source-ELSE",
+        "targetHandle": "dFxrGZS3Wmnz-target-top"
+      },
+      {
+        "source": "yjFO3YcM7KG2",
+        "target": "vlNHndpNuFXB",
+        "sourceHandle": "yjFO3YcM7KG2-source-right",
+        "targetHandle": "vlNHndpNuFXB-target-left"
+      },
+      {
+        "source": "rDzA1VxdpPIz",
+        "target": "quYZgsW32ApA",
+        "sourceHandle": "rDzA1VxdpPIz-source-right",
+        "targetHandle": "quYZgsW32ApA-target-left"
+      },
+      {
+        "source": "qwKPaLWbYTLa",
+        "target": "a2lqxASWi1vb",
+        "sourceHandle": "qwKPaLWbYTLa-source-right",
+        "targetHandle": "a2lqxASWi1vb-target-left"
+      },
+      {
+        "source": "nLBlOh6lWxkY",
+        "target": "yjFO3YcM7KG2",
+        "sourceHandle": "nLBlOh6lWxkY-source-right",
+        "targetHandle": "yjFO3YcM7KG2-target-left"
+      },
+      {
+        "source": "w4heEpNflz59",
+        "target": "bdjAb5B2U1DQ",
+        "sourceHandle": "w4heEpNflz59-source-IF",
+        "targetHandle": "bdjAb5B2U1DQ-target-left"
+      },
+      {
+        "source": "qlt9KJbbS9yJ",
+        "target": "mt7GlCIwbO9I",
+        "sourceHandle": "qlt9KJbbS9yJ-source-IF",
+        "targetHandle": "mt7GlCIwbO9I-target-left"
+      },
+      {
+        "source": "mt7GlCIwbO9I",
+        "target": "rDzA1VxdpPIz",
+        "sourceHandle": "mt7GlCIwbO9I-source-IF",
+        "targetHandle": "rDzA1VxdpPIz-target-left"
+      },
+      {
+        "source": "rhyUytTUBm19",
+        "target": "quYZgsW32ApA",
+        "sourceHandle": "rhyUytTUBm19-source-right",
+        "targetHandle": "quYZgsW32ApA-target-left"
+      },
+      {
+        "source": "mt7GlCIwbO9I",
+        "target": "dtUmoUtTKfpM",
+        "sourceHandle": "mt7GlCIwbO9I-source-ELSE",
+        "targetHandle": "dtUmoUtTKfpM-target-left"
+      },
+      {
+        "source": "dtUmoUtTKfpM",
+        "target": "rhyUytTUBm19",
+        "sourceHandle": "dtUmoUtTKfpM-source-right",
+        "targetHandle": "rhyUytTUBm19-target-left"
+      },
+      {
+        "source": "vlNHndpNuFXB",
+        "target": "uow83rLCI2pI",
+        "sourceHandle": "vlNHndpNuFXB-source-right",
+        "targetHandle": "uow83rLCI2pI-target-left"
+      },
+      {
+        "source": "uow83rLCI2pI",
+        "target": "qwKPaLWbYTLa",
+        "sourceHandle": "uow83rLCI2pI-source-right",
+        "targetHandle": "qwKPaLWbYTLa-target-left"
+      },
+      {
+        "source": "quYZgsW32ApA",
+        "target": "nLBlOh6lWxkY",
+        "sourceHandle": "quYZgsW32ApA-source-right",
+        "targetHandle": "nLBlOh6lWxkY-target-left"
+      }
+    ],
+    "chatConfig": {
+      "welcomeText": "## 你好，歡迎使用文档翻譯机器人\n1. 選擇源語言和目標語言\n2. 發送你需要翻譯的文档\n3. 等待翻譯結果輸出",
+      "variables": [
+        {
+          "id": "v98n5b",
+          "key": "source_lang",
+          "label": "源語言",
+          "type": "select",
+          "required": true,
+          "maxLen": 50,
+          "enums": [
+            {
+              "value": "簡體中文"
+            },
+            {
+              "value": "繁體中文"
+            },
+            {
+              "value": "English"
+            },
+            {
+              "value": "Español"
+            },
+            {
+              "value": "Français"
+            },
+            {
+              "value": "Deutsch"
+            },
+            {
+              "value": "Italiano"
+            },
+            {
+              "value": "日本語"
+            },
+            {
+              "value": "한국어"
+            },
+            {
+              "value": "Русский"
+            },
+            {
+              "value": "العربية"
+            },
+            {
+              "value": "Bahasa Indonesia"
+            },
+            {
+              "value": "Polski"
+            }
+          ],
+          "icon": "core/app/variable/select"
+        },
+        {
+          "id": "c3tvge",
+          "key": "target_lang",
+          "label": "目標語言",
+          "type": "select",
+          "required": true,
+          "maxLen": 50,
+          "enums": [
+            {
+              "value": "簡體中文"
+            },
+            {
+              "value": "繁體中文"
+            },
+            {
+              "value": "English"
+            },
+            {
+              "value": "Español"
+            },
+            {
+              "value": "Français"
+            },
+            {
+              "value": "Deutsch"
+            },
+            {
+              "value": "Italiano"
+            },
+            {
+              "value": "日本語"
+            },
+            {
+              "value": "한국어"
+            },
+            {
+              "value": "Русский"
+            },
+            {
+              "value": "العربية"
+            },
+            {
+              "value": "Bahasa Indonesia"
+            },
+            {
+              "value": "Polski"
+            }
+          ],
+          "icon": "core/app/variable/select"
+        }
+      ],
+      "scheduledTriggerConfig": {
+        "cronString": "",
+        "timezone": "Asia/Shanghai",
+        "defaultPrompt": ""
+      },
+      "fileSelectConfig": {
+        "canSelectFile": true,
+        "canSelectImg": false,
+        "maxFiles": 10
+      },
+      "_id": "6688b45317c65410d61d58aa"
+    }
+  }
+}

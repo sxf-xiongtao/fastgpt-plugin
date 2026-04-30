@@ -1,0 +1,660 @@
+{
+  "name": "多輪翻譯机器人",
+  "intro": "通過 4 輪翻譯，提高翻譯英文的質量",
+  "author": "",
+  "avatar": "core/app/templates/TranslateRobot",
+  "tags": [
+    "office-services"
+  ],
+  "type": "advanced",
+  "workflow": {
+    "nodes": [
+      {
+        "nodeId": "userGuide",
+        "name": "系統配置",
+        "intro": "可以配置應用的系統參數",
+        "avatar": "/imgs/workflow/userGuide.png",
+        "flowNodeType": "userGuide",
+        "position": {
+          "x": 531.2422736065552,
+          "y": -486.7611729549753
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "welcomeText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "string",
+            "label": "core.app.Welcome Text",
+            "value": ""
+          },
+          {
+            "key": "variables",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "core.app.Chat Variable",
+            "value": []
+          },
+          {
+            "key": "questionGuide",
+            "valueType": "any",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "core.app.Question Guide",
+            "value": {
+              "open": false
+            }
+          },
+          {
+            "key": "tts",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "type": "web"
+            }
+          },
+          {
+            "key": "whisper",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "open": false,
+              "autoSend": false,
+              "autoTTSResponse": false
+            }
+          },
+          {
+            "key": "scheduleTrigger",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": null
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "448745",
+        "name": "流程開始",
+        "intro": "",
+        "avatar": "/imgs/workflow/userChatInput.svg",
+        "flowNodeType": "workflowStart",
+        "position": {
+          "x": 558.4082376415505,
+          "y": 123.72387429194112
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "用戶問題"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "userChatInput",
+            "key": "userChatInput",
+            "label": "core.module.input.label.user question",
+            "type": "static",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "nodeId": "loOvhld2ZTKa",
+        "name": "第一輪翻譯",
+        "intro": "AI 大模型對話",
+        "avatar": "/imgs/workflow/AI.png",
+        "flowNodeType": "chatNode",
+        "showStatus": true,
+        "position": {
+          "x": 1748.8252410306534,
+          "y": -245.08260685989214
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "model",
+            "renderTypeList": [
+              "settingLLMModel",
+              "reference"
+            ],
+            "label": "core.module.input.label.aiModel",
+            "valueType": "string",
+            "value": "claude-3-5-sonnet-20240620"
+          },
+          {
+            "key": "temperature",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 0,
+            "valueType": "number",
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          {
+            "key": "maxToken",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 2000,
+            "valueType": "number",
+            "min": 100,
+            "max": 4000,
+            "step": 50
+          },
+          {
+            "key": "isResponseAnswerText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": true,
+            "valueType": "boolean"
+          },
+          {
+            "key": "quoteTemplate",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string"
+          },
+          {
+            "key": "quotePrompt",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "valueType": "string"
+          },
+          {
+            "key": "systemPrompt",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "max": 3000,
+            "valueType": "string",
+            "label": "core.ai.Prompt",
+            "description": "core.app.tip.systemPromptTip",
+            "placeholder": "core.app.tip.chatNodeSystemPromptTip",
+            "value": "# Role: 資深英汉翻譯專家\n\n## Background:\n你是一位經驗豐富的英汉翻譯專家,精通英汉互譯,尤其擅長將英文文章譯成流畅易懂的現代汉語。你曾多次帶領團隊完成大型翻譯项目,譯文廣受好評。\n\n## Attention:\n- 翻譯過程中要始終堅持\"信、達、雅\"的原則,但\"達\"尤為重要\n- 譯文要符合現代汉語的表達習惯,通俗易懂,連貫流畅 \n- 避免使用過於文绉绉的表達和晦涩難懂的典故引用\n\n## Profile:  \n- Author: 米開朗基杨 \n- Version: 0.2\n- Language: 中文\n- Description: 你是一位資深英汉翻譯專家,精通英汉互譯。你擅長將英文文章譯成地道流畅的現代汉語,表達準確易懂,符合當代中文語言習惯。\n\n## Constraints:\n- 必須嚴格遵循四輪翻譯流程:直譯、意譯、校審、定稿  \n- 譯文要忠實原文,準確無誤,不能遺漏或曲解原意\n- 譯文應以現代白話文為主,避免過多使用文言文和古典詩詞\n- 每一輪翻譯前後必須添加【思考】和【翻譯】標記\n- 最終譯文使用Markdown的代碼塊呈現\n\n## Goals:\n- 通過四輪翻譯流程,將英文原文譯成高質量的現代汉語譯文  \n- 譯文要準確傳達原文意思,語言表達力求浅顯易懂,朗朗上口\n- 适度使用一些熟語俗語、流行網絡用語等,增強譯文的親和力\n- 在直譯的基礎上,提供至少2個不同風格的意譯版本供選擇\n\n## Skills:\n- 精通英汉雙語,具有紮實的語言功底和豐富的翻譯經驗\n- 擅長將英語表達習惯轉換為地道自然的現代汉語\n- 對當代中文語言的發展變化有敏銳洞察,善於把握語言流行趨勢\n\n## Workflow:\n1. 第一輪直譯:逐字逐句忠實原文,不遺漏任何信息\n2. 第二輪意譯:在直譯的基礎上用通俗流畅的現代汉語意譯原文,至少提供2個不同風格的版本\n3. 第三輪校審:仔細審視譯文,消除偏差和欠缺,使譯文更加地道易懂 \n4. 第四輪定稿:擇優選取,反複修改潤色,最終定稿出一個簡洁畅達、符合大眾閱讀習惯的譯文\n\n## OutputFormat: \n- 每一輪翻譯前用【思考】說明該輪要點\n- 每一輪翻譯後用【翻譯】呈現譯文\n- 在\\`\\`\\`代碼塊中展示最終定稿譯文\n\n## Suggestions:\n- 直譯時力求忠實原文,但不要過於拘泥逐字逐句\n- 意譯時在準確表達原意的基礎上,用最樸實無華的現代汉語來表達 \n- 校審環節重點關注譯文是否符合當代汉語表達習惯,是否通俗易懂\n- 定稿時适度采用一些熟語谚語、網絡流行語等,使譯文更接地氣\n- 善於利用中文的靈活性,用不同的表述方式展現同一內容,提高譯文的可讀性\n\n## Initialization\n作為一名資深英汉翻譯專家,你必須嚴格遵循翻譯流程的各项要求。首先請向用戶問好,介紹你將帶領團隊完成翻譯任務,力求將英文原文譯成通俗易懂的現代汉語。然後簡要說明四輪翻譯流程,請用戶提供英文原文,開始進行翻譯工作。"
+          },
+          {
+            "key": "history",
+            "renderTypeList": [
+              "numberInput",
+              "reference"
+            ],
+            "valueType": "chatHistory",
+            "label": "core.module.input.label.chat history",
+            "description": "最多攜帶多少輪對話記錄",
+            "required": true,
+            "min": 0,
+            "max": 50,
+            "value": 6
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "用戶問題",
+            "value": [
+              "gBDvemE4FBhp",
+              "system_text"
+            ]
+          },
+          {
+            "key": "quoteQA",
+            "renderTypeList": [
+              "settingDatasetQuotePrompt"
+            ],
+            "label": "",
+            "debugLabel": "知識庫引用",
+            "description": "",
+            "valueType": "datasetQuote"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "history",
+            "key": "history",
+            "required": true,
+            "label": "core.module.output.label.New context",
+            "description": "core.module.output.description.New context",
+            "valueType": "chatHistory",
+            "type": "static"
+          },
+          {
+            "id": "answerText",
+            "key": "answerText",
+            "required": true,
+            "label": "core.module.output.label.Ai response content",
+            "description": "core.module.output.description.Ai response content",
+            "valueType": "string",
+            "type": "static"
+          }
+        ]
+      },
+      {
+        "nodeId": "w0oBbQ3YJHye",
+        "name": "代碼運行",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "/imgs/workflow/code.svg",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": 2522.61682940854,
+          "y": -79.74569750380468
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "這些變量會作為代碼的運行的輸入參數",
+            "editField": {
+              "key": true,
+              "valueType": true
+            },
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            }
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js"
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "function main({data1}) {\n    const codeBlocks = data1.match(/```[\\s\\S]*?```/g);\n\n    if (codeBlocks && codeBlocks.length > 0) {\n        const lastCodeBlock = codeBlocks[codeBlocks.length - 1];\n        const cleanedCodeBlock = lastCodeBlock.replace(/```[a-zA-Z]*|```/g, '').trim();\n        \n        return {\n            result: cleanedCodeBlock\n        };\n    }\n\n    return {\n        result: '未截取到代碼塊內容'\n    };\n}\n"
+          },
+          {
+            "key": "data1",
+            "valueType": "string",
+            "label": "data1",
+            "renderTypeList": [
+              "reference"
+            ],
+            "description": "",
+            "canEdit": true,
+            "editField": {
+              "key": true,
+              "valueType": true
+            },
+            "value": [
+              "loOvhld2ZTKa",
+              "answerText"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點"
+          },
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "完整響應數據",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "運行錯誤",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "qLUQfhG0ILRX",
+            "type": "dynamic",
+            "key": "result",
+            "valueType": "string",
+            "label": "result"
+          },
+          {
+            "id": "gR0mkQpJ4Og8",
+            "type": "dynamic",
+            "key": "data2",
+            "valueType": "string",
+            "label": "data2"
+          }
+        ]
+      },
+      {
+        "nodeId": "foO69L5FOmDQ",
+        "name": "指定回複",
+        "intro": "該模塊可以直接回複一段指定的內容。常用於引導、提示。非字符串內容傳入時，會轉成字符串進行輸出。",
+        "avatar": "/imgs/workflow/reply.png",
+        "flowNodeType": "answerNode",
+        "position": {
+          "x": 3798.4479531204515,
+          "y": 116.03040242110023
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "text",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "valueType": "any",
+            "required": true,
+            "label": "core.module.input.label.Response content",
+            "description": "core.module.input.description.Response content",
+            "placeholder": "core.module.input.description.Response content",
+            "selectedTypeIndex": 1,
+            "value": [
+              "bcqtxqxE2R6o",
+              "system_text"
+            ]
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "gBDvemE4FBhp",
+        "name": "文本拼接",
+        "intro": "可對固定或傳入的文本進行加工後輸出，非字符串類型數據最終會轉成字符串類型。",
+        "avatar": "/imgs/workflow/textEditor.svg",
+        "flowNodeType": "textEditor",
+        "position": {
+          "x": 1031.371061396644,
+          "y": 38.65839420088383
+        },
+        "version": "486",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "可以引用其他節點的輸出，作為文本拼接的變量，通過 {{字段名}} 來引用變量",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            }
+          },
+          {
+            "key": "system_textareaInput",
+            "renderTypeList": [
+              "textarea"
+            ],
+            "valueType": "string",
+            "required": true,
+            "label": "拼接文本",
+            "placeholder": "可通過 {{字段名}} 來引用變量",
+            "value": "原文:\n\"\"\"\n{{q}}\n\"\"\""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "q",
+            "label": "q",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "required": true,
+            "value": [
+              "448745",
+              "userChatInput"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_text",
+            "key": "system_text",
+            "label": "拼接結果",
+            "type": "static",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "nodeId": "bcqtxqxE2R6o",
+        "name": "合并輸出結果",
+        "intro": "可對固定或傳入的文本進行加工後輸出，非字符串類型數據最終會轉成字符串類型。",
+        "avatar": "/imgs/workflow/textEditor.svg",
+        "flowNodeType": "textEditor",
+        "position": {
+          "x": 3113.6227559936665,
+          "y": 12.909197647746709
+        },
+        "version": "486",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "可以引用其他節點的輸出，作為文本拼接的變量，通過 {{字段名}} 來引用變量",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            }
+          },
+          {
+            "key": "system_textareaInput",
+            "renderTypeList": [
+              "textarea"
+            ],
+            "valueType": "string",
+            "required": true,
+            "label": "拼接文本",
+            "placeholder": "可通過 {{字段名}} 來引用變量",
+            "value": "****** \n\n最終翻譯結果如下: \n\n```\n{{result}}\n```"
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "result",
+            "label": "result",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            },
+            "required": true,
+            "value": [
+              "w0oBbQ3YJHye",
+              "qLUQfhG0ILRX"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_text",
+            "key": "system_text",
+            "label": "拼接結果",
+            "type": "static",
+            "valueType": "string"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "loOvhld2ZTKa",
+        "target": "w0oBbQ3YJHye",
+        "sourceHandle": "loOvhld2ZTKa-source-right",
+        "targetHandle": "w0oBbQ3YJHye-target-left"
+      },
+      {
+        "source": "448745",
+        "target": "gBDvemE4FBhp",
+        "sourceHandle": "448745-source-right",
+        "targetHandle": "gBDvemE4FBhp-target-left"
+      },
+      {
+        "source": "gBDvemE4FBhp",
+        "target": "loOvhld2ZTKa",
+        "sourceHandle": "gBDvemE4FBhp-source-right",
+        "targetHandle": "loOvhld2ZTKa-target-left"
+      },
+      {
+        "source": "w0oBbQ3YJHye",
+        "target": "bcqtxqxE2R6o",
+        "sourceHandle": "w0oBbQ3YJHye-source-right",
+        "targetHandle": "bcqtxqxE2R6o-target-left"
+      },
+      {
+        "source": "bcqtxqxE2R6o",
+        "target": "foO69L5FOmDQ",
+        "sourceHandle": "bcqtxqxE2R6o-source-right",
+        "targetHandle": "foO69L5FOmDQ-target-left"
+      }
+    ],
+    "chatConfig": {
+      "scheduledTriggerConfig": {
+        "cronString": "",
+        "timezone": "Asia/Shanghai",
+        "defaultPrompt": ""
+      }
+    }
+  }
+}

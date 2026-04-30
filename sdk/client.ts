@@ -102,8 +102,9 @@ export class FastGPTPluginClient {
   }
 
   // Workflow
-  async listWorkflows() {
-    return this.request<TemplateListType>('/api/list');
+  async listWorkflows(locale?: string) {
+    const query = locale ? `?locale=${locale}` : '';
+    return this.request<TemplateListType>(`/api/list${query}`);
   }
 }
 

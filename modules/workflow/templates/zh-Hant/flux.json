@@ -1,0 +1,367 @@
+{
+  "name": "Flux 繪圖",
+  "intro": "通過請求 Flux 接口繪圖，需要有 api key",
+  "author": "",
+  "avatar": "core/app/templates/flux",
+  "type": "plugin",
+  "tags": [
+    "image-generation"
+  ],
+  "workflow": {
+    "nodes": [
+      {
+        "nodeId": "pluginInput",
+        "name": "插件開始",
+        "intro": "可以配置插件需要哪些輸入，利用這些輸入來運行插件",
+        "avatar": "core/workflow/template/workflowStart",
+        "flowNodeType": "pluginInput",
+        "showStatus": false,
+        "position": {
+          "x": 503.3030871469042,
+          "y": -91.64434154072819
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "selectedTypeIndex": 0,
+            "valueType": "string",
+            "canEdit": true,
+            "key": "繪圖提示詞",
+            "label": "繪圖提示詞",
+            "description": "繪圖提示詞",
+            "required": true,
+            "toolDescription": "繪圖提示詞"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "繪圖提示詞",
+            "valueType": "string",
+            "key": "繪圖提示詞",
+            "label": "繪圖提示詞",
+            "type": "hidden"
+          }
+        ]
+      },
+      {
+        "nodeId": "pluginOutput",
+        "name": "插件輸出",
+        "intro": "自定義配置外部輸出，使用插件時，僅暴露自定義配置的輸出",
+        "avatar": "core/workflow/template/pluginOutput",
+        "flowNodeType": "pluginOutput",
+        "showStatus": false,
+        "position": {
+          "x": 1876.2082565873427,
+          "y": -110.14434154072819
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "圖片訪問鏈接",
+            "label": "圖片訪問鏈接",
+            "description": "",
+            "value": [
+              "tMvel910bnrJ",
+              "pJXgWoTpPoMy"
+            ]
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "object",
+            "canEdit": true,
+            "key": "error",
+            "label": "錯誤信息",
+            "description": "",
+            "value": [
+              "tMvel910bnrJ",
+              "error"
+            ]
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "tMvel910bnrJ",
+        "name": "HTTP 請求",
+        "intro": "可以發出一個 HTTP 請求，實現更為複雜的操作（聯網搜索、數據庫查詢等）",
+        "avatar": "core/workflow/template/httpRequest",
+        "flowNodeType": "httpRequest468",
+        "showStatus": true,
+        "position": {
+          "x": 1138.1732435351091,
+          "y": -416.6443415407282
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "common:core.module.input.description.HTTP Dynamic Input",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpMethod",
+            "renderTypeList": [
+              "custom"
+            ],
+            "valueType": "string",
+            "label": "",
+            "value": "POST",
+            "required": true,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpTimeout",
+            "renderTypeList": [
+              "custom"
+            ],
+            "valueType": "number",
+            "label": "",
+            "value": 30,
+            "min": 5,
+            "max": 600,
+            "required": true,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpReqUrl",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "string",
+            "label": "",
+            "description": "common:core.module.input.description.Http Request Url",
+            "placeholder": "https://api.ai.com/getInventory",
+            "required": false,
+            "value": "https://fal.run/fal-ai/flux-pro",
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpHeader",
+            "renderTypeList": [
+              "custom"
+            ],
+            "valueType": "any",
+            "value": [
+              {
+                "key": "Authorization",
+                "type": "string",
+                "value": "Key {{apikey}}"
+              }
+            ],
+            "label": "",
+            "description": "common:core.module.input.description.Http Request Header",
+            "placeholder": "common:core.module.input.description.Http Request Header",
+            "required": false,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpParams",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "value": [],
+            "label": "",
+            "required": false,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpJsonBody",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "value": "{\n  \"prompt\": \"{{prompt}}\",\n  \"image_size\": \"landscape_4_3\",\n  \"num_inference_steps\": 28,\n  \"guidance_scale\": 3.5\n}",
+            "label": "",
+            "required": false,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpFormBody",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "value": [],
+            "label": "",
+            "required": false,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "key": "system_httpContentType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "string",
+            "value": "json",
+            "label": "",
+            "required": false,
+            "debugLabel": "",
+            "toolDescription": ""
+          },
+          {
+            "renderTypeList": [
+              "reference"
+            ],
+            "valueType": "string",
+            "canEdit": true,
+            "key": "prompt",
+            "label": "prompt",
+            "customInputConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "arrayAny",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": true
+            },
+            "required": true,
+            "value": [
+              "pluginInput",
+              "繪圖提示詞"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "error",
+            "key": "error",
+            "label": "workflow:request_error",
+            "description": "HTTP請求錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "httpRawResponse",
+            "key": "httpRawResponse",
+            "required": true,
+            "label": "workflow:raw_response",
+            "description": "HTTP請求的原始響應。隻能接受字符串或JSON類型響應數據。",
+            "valueType": "any",
+            "type": "static"
+          },
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "customFieldConfig": {
+              "selectValueTypeList": [
+                "string",
+                "number",
+                "boolean",
+                "object",
+                "arrayString",
+                "arrayNumber",
+                "arrayBoolean",
+                "arrayObject",
+                "any",
+                "chatHistory",
+                "datasetQuote",
+                "dynamic",
+                "selectApp",
+                "selectDataset"
+              ],
+              "showDescription": false,
+              "showDefaultValue": false
+            }
+          },
+          {
+            "id": "pJXgWoTpPoMy",
+            "valueType": "string",
+            "type": "dynamic",
+            "key": "images[0].url",
+            "label": "images[0].url"
+          }
+        ]
+      },
+      {
+        "nodeId": "lSYsc889IXDr",
+        "name": "系統配置",
+        "intro": "",
+        "avatar": "core/workflow/template/systemConfig",
+        "flowNodeType": "pluginConfig",
+        "position": {
+          "x": 45.52914573588026,
+          "y": -110.14434154072819
+        },
+        "version": "4811",
+        "inputs": [],
+        "outputs": []
+      }
+    ],
+    "edges": [
+      {
+        "source": "pluginInput",
+        "target": "tMvel910bnrJ",
+        "sourceHandle": "pluginInput-source-right",
+        "targetHandle": "tMvel910bnrJ-target-left"
+      },
+      {
+        "source": "tMvel910bnrJ",
+        "target": "pluginOutput",
+        "sourceHandle": "tMvel910bnrJ-source-right",
+        "targetHandle": "pluginOutput-target-left"
+      }
+    ]
+  }
+}

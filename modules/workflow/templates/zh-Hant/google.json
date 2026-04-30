@@ -1,0 +1,505 @@
+{
+  "name": "穀歌搜索",
+  "intro": "通過請求穀歌搜索，查詢相關內容作為模型的參考。",
+  "author": "",
+  "avatar": "core/app/templates/google",
+  "tags": [
+    "recommendation",
+    "web-search"
+  ],
+  "type": "advanced",
+  "workflow": {
+    "nodes": [
+      {
+        "nodeId": "userGuide",
+        "name": "系統配置",
+        "intro": "可以配置應用的系統參數",
+        "avatar": "/imgs/workflow/userGuide.png",
+        "flowNodeType": "userGuide",
+        "position": {
+          "x": 262.2732338817093,
+          "y": -476.00241136598146
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "welcomeText",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "string",
+            "label": "core.app.Welcome Text",
+            "value": ""
+          },
+          {
+            "key": "variables",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "core.app.Chat Variable",
+            "value": []
+          },
+          {
+            "key": "questionGuide",
+            "valueType": "any",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "core.app.Question Guide",
+            "value": {
+              "open": false
+            }
+          },
+          {
+            "key": "tts",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "type": "web"
+            }
+          },
+          {
+            "key": "whisper",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": {
+              "open": false,
+              "autoSend": false,
+              "autoTTSResponse": false
+            }
+          },
+          {
+            "key": "scheduleTrigger",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "label": "",
+            "value": null
+          }
+        ],
+        "outputs": []
+      },
+      {
+        "nodeId": "448745",
+        "name": "流程開始",
+        "intro": "",
+        "avatar": "/imgs/workflow/userChatInput.svg",
+        "flowNodeType": "workflowStart",
+        "position": {
+          "x": 295.8944548701009,
+          "y": 110.81336038514848
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "toolDescription": "用戶問題"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "userChatInput",
+            "key": "userChatInput",
+            "label": "core.module.input.label.user question",
+            "valueType": "string",
+            "type": "static"
+          }
+        ]
+      },
+      {
+        "nodeId": "NOgbnBzUwDgT",
+        "name": "工具調用",
+        "intro": "通過AI模型自動選擇一個或多個功能塊進行調用，也可以對插件進行調用。",
+        "avatar": "/imgs/workflow/tool.svg",
+        "flowNodeType": "tools",
+        "showStatus": true,
+        "position": {
+          "x": 1028.8358722416106,
+          "y": -500.8755882990822
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "model",
+            "renderTypeList": [
+              "settingLLMModel",
+              "reference"
+            ],
+            "label": "core.module.input.label.aiModel",
+            "valueType": "string",
+            "llmModelType": "all",
+            "value": "FastAI-plus"
+          },
+          {
+            "key": "temperature",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 0,
+            "valueType": "number",
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          {
+            "key": "maxToken",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": 2000,
+            "valueType": "number",
+            "min": 100,
+            "max": 4000,
+            "step": 50
+          },
+          {
+            "key": "systemPrompt",
+            "renderTypeList": [
+              "textarea",
+              "reference"
+            ],
+            "max": 3000,
+            "valueType": "string",
+            "label": "core.ai.Prompt",
+            "description": "core.app.tip.systemPromptTip",
+            "placeholder": "core.app.tip.chatNodeSystemPromptTip",
+            "value": ""
+          },
+          {
+            "key": "history",
+            "renderTypeList": [
+              "numberInput",
+              "reference"
+            ],
+            "valueType": "chatHistory",
+            "label": "core.module.input.label.chat history",
+            "description": "最多攜帶多少輪對話記錄",
+            "required": true,
+            "min": 0,
+            "max": 30,
+            "value": 6
+          },
+          {
+            "key": "userChatInput",
+            "renderTypeList": [
+              "reference",
+              "textarea"
+            ],
+            "valueType": "string",
+            "label": "用戶問題",
+            "required": true,
+            "value": [
+              "448745",
+              "userChatInput"
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "NodeOutputKeyEnum.answerText",
+            "key": "NodeOutputKeyEnum.answerText",
+            "label": "core.module.output.label.Ai response content",
+            "description": "core.module.output.description.Ai response content",
+            "valueType": "string",
+            "type": "FlowNodeOutputTypeEnum.static"
+          }
+        ]
+      },
+      {
+        "nodeId": "GMELVPxHfpg5",
+        "name": "HTTP 請求",
+        "intro": "調用穀歌搜索，查詢相關內容",
+        "avatar": "/imgs/workflow/http.png",
+        "flowNodeType": "httpRequest468",
+        "showStatus": true,
+        "position": {
+          "x": 1005.4777753640342,
+          "y": 319.4905539380939
+        },
+        "version": "481",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "core.module.input.description.HTTP Dynamic Input"
+          },
+          {
+            "valueType": "string",
+            "renderTypeList": [
+              "reference"
+            ],
+            "key": "query",
+            "label": "query",
+            "toolDescription": "穀歌搜索檢索詞",
+            "required": true,
+            "canEdit": true,
+            "editField": {
+              "key": true,
+              "description": true
+            }
+          },
+          {
+            "key": "system_httpMethod",
+            "renderTypeList": [
+              "custom"
+            ],
+            "valueType": "string",
+            "label": "",
+            "value": "GET",
+            "required": true
+          },
+          {
+            "key": "system_httpReqUrl",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "string",
+            "label": "",
+            "description": "core.module.input.description.Http Request Url",
+            "placeholder": "https://api.ai.com/getInventory",
+            "required": false,
+            "value": "https://www.googleapis.com/customsearch/v1"
+          },
+          {
+            "key": "system_httpHeader",
+            "renderTypeList": [
+              "custom"
+            ],
+            "valueType": "any",
+            "value": [],
+            "label": "",
+            "description": "core.module.input.description.Http Request Header",
+            "placeholder": "core.module.input.description.Http Request Header",
+            "required": false
+          },
+          {
+            "key": "system_httpParams",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "value": [
+              {
+                "key": "q",
+                "type": "string",
+                "value": "{{query}}"
+              },
+              {
+                "key": "cx",
+                "type": "string",
+                "value": "穀歌搜索cxID"
+              },
+              {
+                "key": "key",
+                "type": "string",
+                "value": "穀歌搜索key"
+              },
+              {
+                "key": "c2coff",
+                "type": "string",
+                "value": "1"
+              },
+              {
+                "key": "start",
+                "type": "string",
+                "value": "1"
+              },
+              {
+                "key": "end",
+                "type": "string",
+                "value": "20"
+              },
+              {
+                "key": "dateRestrict",
+                "type": "string",
+                "value": "m[1]"
+              }
+            ],
+            "label": "",
+            "required": false
+          },
+          {
+            "key": "system_httpJsonBody",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "valueType": "any",
+            "value": "",
+            "label": "",
+            "required": false
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "editField": {
+              "key": true,
+              "valueType": true
+            }
+          },
+          {
+            "id": "httpRawResponse",
+            "key": "httpRawResponse",
+            "label": "原始響應",
+            "description": "HTTP請求的原始響應。隻能接受字符串或JSON類型響應數據。",
+            "valueType": "any",
+            "type": "static",
+            "required": true
+          },
+          {
+            "id": "M5YmxaYe8em1",
+            "type": "dynamic",
+            "key": "prompt",
+            "valueType": "string",
+            "label": "prompt"
+          }
+        ]
+      },
+      {
+        "nodeId": "poIbrrA8aiR0",
+        "name": "代碼運行",
+        "intro": "執行一段簡單的腳本代碼，通常用於進行複雜的數據處理。",
+        "avatar": "/imgs/workflow/code.svg",
+        "flowNodeType": "code",
+        "showStatus": true,
+        "position": {
+          "x": 1711.805344753384,
+          "y": 650.1023414708576
+        },
+        "version": "482",
+        "inputs": [
+          {
+            "key": "system_addInputParam",
+            "renderTypeList": [
+              "addInputParam"
+            ],
+            "valueType": "dynamic",
+            "label": "",
+            "required": false,
+            "description": "這些變量會作為代碼的運行的輸入參數",
+            "editField": {
+              "key": true,
+              "valueType": true
+            }
+          },
+          {
+            "key": "data",
+            "valueType": "object",
+            "label": "data",
+            "renderTypeList": [
+              "reference"
+            ],
+            "description": "",
+            "canEdit": true,
+            "editField": {
+              "key": true,
+              "valueType": true
+            },
+            "value": [
+              "GMELVPxHfpg5",
+              "httpRawResponse"
+            ]
+          },
+          {
+            "key": "codeType",
+            "renderTypeList": [
+              "hidden"
+            ],
+            "label": "",
+            "value": "js"
+          },
+          {
+            "key": "code",
+            "renderTypeList": [
+              "custom"
+            ],
+            "label": "",
+            "value": "function main({data}){\n    const result = data.items.map((item) => ({\n      title: item.title,\n      link: item.link,\n      snippet: item.snippet\n    }))\n    return { prompt: JSON.stringify(result) }\n}"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "system_addOutputParam",
+            "key": "system_addOutputParam",
+            "type": "dynamic",
+            "valueType": "dynamic",
+            "label": "",
+            "editField": {
+              "key": true,
+              "valueType": true
+            },
+            "description": "將代碼中 return 的對象作為輸出，傳遞給後續的節點"
+          },
+          {
+            "id": "system_rawResponse",
+            "key": "system_rawResponse",
+            "label": "完整響應數據",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "error",
+            "key": "error",
+            "label": "運行錯誤",
+            "description": "代碼運行錯誤信息，成功時返回空",
+            "valueType": "object",
+            "type": "static"
+          },
+          {
+            "id": "qLUQfhG0ILRX",
+            "type": "dynamic",
+            "key": "prompt",
+            "valueType": "string",
+            "label": "prompt"
+          }
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "source": "448745",
+        "target": "NOgbnBzUwDgT",
+        "sourceHandle": "448745-source-right",
+        "targetHandle": "NOgbnBzUwDgT-target-left"
+      },
+      {
+        "source": "NOgbnBzUwDgT",
+        "target": "GMELVPxHfpg5",
+        "sourceHandle": "selectedTools",
+        "targetHandle": "selectedTools"
+      },
+      {
+        "source": "GMELVPxHfpg5",
+        "target": "poIbrrA8aiR0",
+        "sourceHandle": "GMELVPxHfpg5-source-right",
+        "targetHandle": "poIbrrA8aiR0-target-left"
+      }
+    ]
+  }
+}
