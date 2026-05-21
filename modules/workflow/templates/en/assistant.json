@@ -1191,77 +1191,7 @@
       }
     ],
     "chatConfig": {
-      "variables": [
-        {
-          "key": "byG7WNk4",
-          "label": "fallbackReply",
-          "type": "input",
-          "description": "Fallback reply content",
-          "required": false,
-          "valueType": "string",
-          "defaultValue": "",
-          "icon": "core/workflow/inputType/input"
-        },
-        {
-          "key": "utjZSg8f",
-          "label": "faqAnswerMode",
-          "type": "select",
-          "description": "FAQ knowledge answer config",
-          "required": false,
-          "valueType": "string",
-          "list": [
-            {
-              "value": "quote",
-              "label": "quote"
-            },
-            {
-              "label": "llm-summary",
-              "value": "llm-summary"
-            }
-          ],
-          "defaultValue": "",
-          "icon": "core/workflow/inputType/option"
-        },
-        {
-          "key": "hTRJXdb1",
-          "label": "correct_mapping_answer",
-          "type": "custom",
-          "description": "Adjust data match results",
-          "required": false,
-          "valueType": "string",
-          "defaultValue": "",
-          "icon": "core/workflow/inputType/customVariable"
-        },
-        {
-          "key": "udQRlgfO",
-          "label": "faqAnswer",
-          "type": "custom",
-          "description": "",
-          "required": false,
-          "valueType": "string",
-          "defaultValue": ""
-        },
-        {
-          "key": "vKEVhtS6",
-          "label": "enableFallbackReply",
-          "type": "select",
-          "description": "Enable fallback reply",
-          "required": true,
-          "valueType": "string",
-          "defaultValue": "useFallbackReply",
-          "icon": "core/workflow/inputType/option",
-          "list": [
-            {
-              "label": "useFallbackReply",
-              "value": "useFallbackReply"
-            },
-            {
-              "label": "llmReply",
-              "value": "llmReply"
-            }
-          ]
-        }
-      ],
+      "variables": [],
       "scheduledTriggerConfig": {
         "cronString": "",
         "timezone": "Asia/Shanghai",

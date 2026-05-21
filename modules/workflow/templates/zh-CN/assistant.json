@@ -1010,77 +1010,7 @@
       }
     ],
     "chatConfig": {
-      "variables": [
-        {
-          "key": "byG7WNk4",
-          "label": "fallbackReply",
-          "type": "input",
-          "description": "兜底回复内容",
-          "required": false,
-          "valueType": "string",
-          "defaultValue": "",
-          "icon": "core/workflow/inputType/input"
-        },
-        {
-          "key": "utjZSg8f",
-          "label": "faqAnswerMode",
-          "type": "select",
-          "description": "FAQ知识回答配置",
-          "required": false,
-          "valueType": "string",
-          "list": [
-            {
-              "value": "quote",
-              "label": "quote"
-            },
-            {
-              "label": "llm-summary",
-              "value": "llm-summary"
-            }
-          ],
-          "defaultValue": "",
-          "icon": "core/workflow/inputType/option"
-        },
-        {
-          "key": "hTRJXdb1",
-          "label": "correct_mapping_answer",
-          "type": "custom",
-          "description": "校正数据匹配结果",
-          "required": false,
-          "valueType": "string",
-          "defaultValue": "",
-          "icon": "core/workflow/inputType/customVariable"
-        },
-        {
-          "key": "udQRlgfO",
-          "label": "faqAnswer",
-          "type": "custom",
-          "description": "",
-          "required": false,
-          "valueType": "string",
-          "defaultValue": ""
-        },
-        {
-          "key": "vKEVhtS6",
-          "label": "enableFallbackReply",
-          "type": "select",
-          "description": "是否启用兜底回复",
-          "required": true,
-          "valueType": "string",
-          "defaultValue": "useFallbackReply",
-          "icon": "core/workflow/inputType/option",
-          "list": [
-            {
-              "label": "useFallbackReply",
-              "value": "useFallbackReply"
-            },
-            {
-              "label": "llmReply",
-              "value": "llmReply"
-            }
-          ]
-        }
-      ],
+      "variables": [],
       "scheduledTriggerConfig": {
         "cronString": "",
         "timezone": "Asia/Shanghai",
