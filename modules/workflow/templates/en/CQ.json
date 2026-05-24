@@ -278,15 +278,15 @@
             "label": "",
             "value": [
               {
-                "value": "关于电影《星际穿越》的问题",
+                "value": "Questions about the movie Interstellar",
                 "key": "wqre"
               },
               {
-                "value": "打招呼、问候等问题",
+                "value": "Greetings, salutations, etc.",
                 "key": "sdfa"
               },
               {
-                "value": "其他问题",
+                "value": "Other questions",
                 "key": "agex"
               }
             ]
