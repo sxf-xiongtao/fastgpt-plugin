@@ -248,13 +248,12 @@
             "toolDescription": ""
           },
           {
-            "key": "rerankModel",
+            "key": "rerankModelId",
             "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
-            "toolDescription": "",
-            "value": "bge-reranker-large"
+            "toolDescription": ""
           },
           {
             "key": "rerankMethod",
@@ -284,7 +283,7 @@
             "toolDescription": ""
           },
           {
-            "key": "datasetSearchExtensionModel",
+            "key": "datasetSearchExtensionModelId",
             "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
@@ -332,7 +331,7 @@
             "selectedTypeIndex": 1
           },
           {
-            "key": "generateSqlModel",
+            "key": "generateSqlModelId",
             "renderTypeList": ["hidden"],
             "label": "common:search_model",
             "value": "",
@@ -350,7 +349,7 @@
             "toolDescription": ""
           },
           {
-            "key": "agenticSearchLLMModel",
+            "key": "agenticSearchLLMModelId",
             "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
@@ -359,7 +358,7 @@
             "toolDescription": ""
           },
           {
-            "key": "agenticSearchRerankModel",
+            "key": "agenticSearchRerankModelId",
             "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
@@ -485,7 +484,7 @@
         "version": "4.9.7",
         "inputs": [
           {
-            "key": "model",
+            "key": "modelId",
             "renderTypeList": ["settingLLMModel", "reference"],
             "label": "common:core.module.input.label.aiModel",
             "valueType": "string",
