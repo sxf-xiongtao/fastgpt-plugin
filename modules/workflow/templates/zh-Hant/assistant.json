@@ -301,15 +301,14 @@
             "toolDescription": ""
           },
           {
-            "key": "rerankModel",
+            "key": "rerankModelId",
             "renderTypeList": [
               "hidden"
             ],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
-            "toolDescription": "",
-            "value": "bge-reranker-large"
+            "toolDescription": ""
           },
           {
             "key": "rerankMethod",
@@ -345,7 +344,7 @@
             "toolDescription": ""
           },
           {
-            "key": "datasetSearchExtensionModel",
+            "key": "datasetSearchExtensionModelId",
             "renderTypeList": [
               "hidden"
             ],
@@ -408,7 +407,7 @@
             "selectedTypeIndex": 1
           },
           {
-            "key": "generateSqlModel",
+            "key": "generateSqlModelId",
             "renderTypeList": [
               "hidden"
             ],
@@ -430,7 +429,7 @@
             "toolDescription": ""
           },
           {
-            "key": "agenticSearchLLMModel",
+            "key": "agenticSearchLLMModelId",
             "renderTypeList": [
               "hidden"
             ],
@@ -441,7 +440,7 @@
             "toolDescription": ""
           },
           {
-            "key": "agenticSearchRerankModel",
+            "key": "agenticSearchRerankModelId",
             "renderTypeList": [
               "hidden"
             ],
@@ -582,7 +581,7 @@
         "version": "4.9.7",
         "inputs": [
           {
-            "key": "model",
+            "key": "modelId",
             "renderTypeList": [
               "settingLLMModel",
               "reference"

@@ -71,14 +71,13 @@
         "version": "481",
         "inputs": [
           {
-            "key": "model",
+            "key": "modelId",
             "renderTypeList": [
               "settingLLMModel",
               "reference"
             ],
             "label": "core.module.input.label.aiModel",
-            "valueType": "string",
-            "value": "gpt-5"
+            "valueType": "string"
           },
           {
             "key": "temperature",
@@ -218,7 +217,7 @@
         "version": "481",
         "inputs": [
           {
-            "key": "model",
+            "key": "modelId",
             "renderTypeList": [
               "selectLLMModel",
               "reference"
@@ -226,8 +225,7 @@
             "label": "core.module.input.label.aiModel",
             "required": true,
             "valueType": "string",
-            "llmModelType": "classify",
-            "value": "gpt-5"
+            "llmModelType": "classify"
           },
           {
             "key": "systemPrompt",
@@ -404,7 +402,7 @@
             "value": true
           },
           {
-            "key": "datasetSearchExtensionModel",
+            "key": "datasetSearchExtensionModelId",
             "renderTypeList": [
               "hidden"
             ],
