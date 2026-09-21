@@ -25,6 +25,8 @@ export const env = createEnv({
     MAX_API_SIZE: PositiveIntSchema.default(10),
     FASTGPT_BASE_URL: z.url().default('http://localhost:3000'),
     SERVICE_REQUEST_MAX_CONTENT_LENGTH: PositiveIntSchema.default(10),
+    // 工具网络请求超时时间(秒)
+    SERVICE_REQUEST_TIMEOUT: PositiveIntSchema.default(300),
     MAX_WORKER: PositiveIntSchema.default(8),
     MAX_MEMORYMB: PositiveIntSchema.default(1024),
     DISABLE_DEV_TOOLS: BoolSchema.default(false),

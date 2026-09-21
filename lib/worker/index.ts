@@ -95,6 +95,7 @@ export class WorkerPool<Props = Record<string, unknown>, Response = unknown> {
     const workerId = `${Date.now()}${Math.random()}`;
     const worker = new Worker('./worker.js', {
       env: {
+        SERVICE_REQUEST_TIMEOUT: String(env.SERVICE_REQUEST_TIMEOUT),
         ...(env.HTTP_PROXY ? { HTTP_PROXY: env.HTTP_PROXY } : {}),
         ...(env.HTTPS_PROXY ? { HTTPS_PROXY: env.HTTPS_PROXY } : {}),
         ...(env.ALL_PROXY ? { ALL_PROXY: env.ALL_PROXY } : {}),
@@ -179,7 +180,9 @@ export async function dispatchWithNewWorker(data: {
   const worker = new Worker(workerPath, {
     env: {
       NODE_ENV: env.NODE_ENV,
-      LOG_CONSOLE_LEVEL: process.env.LOG_CONSOLE_LEVEL
+      LOG_CONSOLE_LEVEL: process.env.LOG_CONSOLE_LEVEL,
+      // 工具内网络请求超时（秒），不传给 worker 则回退为默认值
+      SERVICE_REQUEST_TIMEOUT: String(env.SERVICE_REQUEST_TIMEOUT)
     },
     ...(isBun
       ? {}

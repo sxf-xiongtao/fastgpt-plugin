@@ -1,4 +1,5 @@
 import { getLogger, mod } from '@/logger';
+import { env } from '@/env';
 
 const logger = getLogger(mod.tool);
 
@@ -43,7 +44,7 @@ export class RequestError extends Error {
 // Default configuration
 const defaultConfig: RequestConfig = {
   method: 'GET',
-  timeout: 30000,
+  timeout: env.SERVICE_REQUEST_TIMEOUT * 1000,
   responseType: 'json',
   retries: 0,
   retryDelay: 1000,

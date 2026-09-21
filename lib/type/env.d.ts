@@ -10,6 +10,7 @@ declare namespace NodeJS {
     MONGODB_URI: string;
     REDIS_URL: string;
     SERVICE_REQUEST_MAX_CONTENT_LENGTH: string;
+    SERVICE_REQUEST_TIMEOUT: string;
     MAX_API_SIZE: string;
     DISABLE_DEV_TOOLS: string;
     MAX_FILE_SIZE: string;
