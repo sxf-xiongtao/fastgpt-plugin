@@ -132,6 +132,8 @@ async function executeRequest<T>(
     controller.abort();
   }, timeout);
 
+  const startAt = Date.now();
+
   try {
     const response = await fetch(finalURL, requestOptions);
     clearTimeout(timeoutId);
@@ -176,7 +178,28 @@ async function executeRequest<T>(
 
     // Handle other errors
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    throw new RequestError(errorMessage, finalConfig);
+    // Node 的 fetch 只抛 'fetch failed',真实原因(undici 超时、连接重置等)在 cause 里,不带出来无法定位
+    const cause =
+      error instanceof Error
+        ? (error.cause as { code?: string; message?: string } | undefined)
+        : undefined;
+    const causeCode = cause?.code;
+    const causeText = causeCode ?? cause?.message;
+
+    // undici 的 headers/body 超时不抛 AbortError,单独识别,避免和网络故障混为一谈。
+    // 打印实际耗时:与 timeout 不一致,就说明 undici 的超时没跟着 SERVICE_REQUEST_TIMEOUT 对齐
+    if (causeCode === 'UND_ERR_HEADERS_TIMEOUT' || causeCode === 'UND_ERR_BODY_TIMEOUT') {
+      const elapsed = Date.now() - startAt;
+      throw new RequestError(
+        `Request timeout after ${elapsed}ms (undici ${causeCode}, config timeout ${timeout}ms)`,
+        finalConfig
+      );
+    }
+
+    throw new RequestError(
+      causeText ? `${errorMessage} (cause: ${causeText})` : errorMessage,
+      finalConfig
+    );
   }
 }
 

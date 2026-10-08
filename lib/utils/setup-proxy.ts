@@ -2,7 +2,13 @@ import { setGlobalDispatcher, EnvHttpProxyAgent } from 'undici';
 import { env } from '@/env';
 
 export function configureProxy() {
-  const agent = new EnvHttpProxyAgent();
+  // fetch(undici)自带 headersTimeout/bodyTimeout,默认 300s。这里不跟着 SERVICE_REQUEST_TIMEOUT 走,
+  // 请求侧即使把 SERVICE_REQUEST_TIMEOUT 调大,也会在 300s 被 undici 提前掐断。
+  const requestTimeout = env.SERVICE_REQUEST_TIMEOUT * 1000;
+  const agent = new EnvHttpProxyAgent({
+    headersTimeout: requestTimeout,
+    bodyTimeout: requestTimeout
+  });
   setGlobalDispatcher(agent);
 
   console.info('✓ HTTP_PROXY: %s', env.HTTP_PROXY);

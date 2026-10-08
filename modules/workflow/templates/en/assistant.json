@@ -3,9 +3,7 @@
   "intro": "Simple conversational agent combining knowledge base retrieval and intelligent dialogue capabilities",
   "author": "FastGPT",
   "avatar": "core/app/assistant/assistantIcon",
-  "tags": [
-    "customer-service"
-  ],
+  "tags": ["customer-service"],
   "type": "assistant",
   "weight": 1,
   "workflow": {
@@ -24,18 +22,14 @@
         "inputs": [
           {
             "key": "welcomeText",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "string",
             "label": "core.app.Welcome Text",
             "value": ""
           },
           {
             "key": "variables",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "core.app.Chat Variable",
             "value": [
@@ -63,9 +57,7 @@
           {
             "key": "questionGuide",
             "valueType": "any",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "core.app.Question Guide",
             "value": {
               "open": true
@@ -73,9 +65,7 @@
           },
           {
             "key": "tts",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": {
@@ -84,9 +74,7 @@
           },
           {
             "key": "whisper",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": {
@@ -97,9 +85,7 @@
           },
           {
             "key": "scheduleTrigger",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": null
@@ -121,10 +107,7 @@
         "inputs": [
           {
             "key": "userChatInput",
-            "renderTypeList": [
-              "reference",
-              "textarea"
-            ],
+            "renderTypeList": ["reference", "textarea"],
             "valueType": "string",
             "label": "workflow:user_question",
             "required": true,
@@ -159,15 +142,10 @@
             "key": "updateList",
             "valueType": "any",
             "label": "",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "value": [
               {
-                "variable": [
-                  "VARIABLE_NODE_ID",
-                  "byG7WNk4"
-                ],
+                "variable": ["VARIABLE_NODE_ID", "byG7WNk4"],
                 "value": [
                   "",
                   "Sorry, I couldn't find an answer. Please try rephrasing your question, and I'll also help report this to the relevant team."
@@ -176,38 +154,20 @@
                 "renderType": "input"
               },
               {
-                "variable": [
-                  "VARIABLE_NODE_ID",
-                  "utjZSg8f"
-                ],
-                "value": [
-                  "",
-                  "quote"
-                ],
+                "variable": ["VARIABLE_NODE_ID", "utjZSg8f"],
+                "value": ["", "quote"],
                 "renderType": "input",
                 "valueType": "string"
               },
               {
-                "variable": [
-                  "VARIABLE_NODE_ID",
-                  "hTRJXdb1"
-                ],
-                "value": [
-                  "",
-                  ""
-                ],
+                "variable": ["VARIABLE_NODE_ID", "hTRJXdb1"],
+                "value": ["", ""],
                 "renderType": "input",
                 "valueType": "string"
               },
               {
-                "variable": [
-                  "VARIABLE_NODE_ID",
-                  "udQRlgfO"
-                ],
-                "value": [
-                  "",
-                  ""
-                ],
+                "variable": ["VARIABLE_NODE_ID", "udQRlgfO"],
+                "value": ["", ""],
                 "renderType": "input",
                 "valueType": "string"
               }
@@ -233,10 +193,7 @@
         "inputs": [
           {
             "key": "datasets",
-            "renderTypeList": [
-              "selectDataset",
-              "reference"
-            ],
+            "renderTypeList": ["selectDataset", "reference"],
             "label": "common:core.module.input.label.Select dataset",
             "value": [],
             "valueType": "selectDataset",
@@ -247,9 +204,7 @@
           },
           {
             "key": "similarity",
-            "renderTypeList": [
-              "selectDatasetParamsModal"
-            ],
+            "renderTypeList": ["selectDatasetParamsModal"],
             "label": "",
             "value": 0.4,
             "valueType": "number",
@@ -258,9 +213,7 @@
           },
           {
             "key": "limit",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "value": 5000,
             "valueType": "number",
@@ -269,9 +222,7 @@
           },
           {
             "key": "searchMode",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "mixedRecall",
@@ -280,9 +231,7 @@
           },
           {
             "key": "embeddingWeight",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "number",
             "value": 0.65,
@@ -291,9 +240,7 @@
           },
           {
             "key": "usingReRank",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": true,
@@ -302,9 +249,7 @@
           },
           {
             "key": "rerankModelId",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
@@ -312,9 +257,7 @@
           },
           {
             "key": "rerankMethod",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "question",
@@ -323,9 +266,7 @@
           },
           {
             "key": "rerankWeight",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "number",
             "value": 0.4,
@@ -334,9 +275,7 @@
           },
           {
             "key": "datasetSearchUsingExtensionQuery",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": true,
@@ -345,9 +284,7 @@
           },
           {
             "key": "datasetSearchExtensionModelId",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
@@ -356,9 +293,7 @@
           },
           {
             "key": "datasetSearchExtensionBg",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "",
@@ -367,9 +302,7 @@
           },
           {
             "key": "authTmbId",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": false,
@@ -378,26 +311,17 @@
           },
           {
             "key": "userChatInput",
-            "renderTypeList": [
-              "reference",
-              "textarea"
-            ],
+            "renderTypeList": ["reference", "textarea"],
             "valueType": "string",
             "label": "workflow:user_question",
             "toolDescription": "Content to search for",
             "required": true,
-            "value": [
-              "workflowStartNodeId",
-              "userChatInput"
-            ],
+            "value": ["workflowStartNodeId", "userChatInput"],
             "debugLabel": ""
           },
           {
             "key": "collectionFilterMatch",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "label": "workflow:collection_metadata_filter",
             "valueType": "string",
             "isPro": true,
@@ -408,9 +332,7 @@
           },
           {
             "key": "generateSqlModelId",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "common:search_model",
             "value": "",
             "valueType": "string",
@@ -419,9 +341,7 @@
           },
           {
             "key": "retrievalMode",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "standard",
@@ -430,9 +350,7 @@
           },
           {
             "key": "agenticSearchLLMModelId",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "",
@@ -441,9 +359,7 @@
           },
           {
             "key": "agenticSearchRerankModelId",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "",
@@ -452,9 +368,7 @@
           },
           {
             "key": "agenticSearchReasoning",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": true,
@@ -498,9 +412,7 @@
         "inputs": [
           {
             "key": "ifElseList",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": [
@@ -508,10 +420,7 @@
                 "condition": "AND",
                 "list": [
                   {
-                    "variable": [
-                      "iKBoX2vIzETU",
-                      "quoteQA"
-                    ],
+                    "variable": ["iKBoX2vIzETU", "quoteQA"],
                     "condition": "isEmpty",
                     "valueType": "input"
                   }
@@ -547,19 +456,13 @@
         "inputs": [
           {
             "key": "text",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "valueType": "any",
             "required": true,
             "label": "common:core.module.input.label.Response content",
             "description": "common:core.module.input.description.Response content",
             "placeholder": "common:core.module.input.description.Response content",
-            "value": [
-              "VARIABLE_NODE_ID",
-              "byG7WNk4"
-            ],
+            "value": ["VARIABLE_NODE_ID", "byG7WNk4"],
             "selectedTypeIndex": 1,
             "debugLabel": "",
             "toolDescription": ""
@@ -582,10 +485,7 @@
         "inputs": [
           {
             "key": "modelId",
-            "renderTypeList": [
-              "settingLLMModel",
-              "reference"
-            ],
+            "renderTypeList": ["settingLLMModel", "reference"],
             "label": "common:core.module.input.label.aiModel",
             "valueType": "string",
             "debugLabel": "",
@@ -593,9 +493,7 @@
           },
           {
             "key": "temperature",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "number",
             "debugLabel": "",
@@ -603,9 +501,7 @@
           },
           {
             "key": "maxToken",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "number",
             "debugLabel": "",
@@ -613,9 +509,7 @@
           },
           {
             "key": "isResponseAnswerText",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "value": true,
             "valueType": "boolean",
@@ -624,9 +518,7 @@
           },
           {
             "key": "aiChatQuoteRole",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "system",
@@ -635,9 +527,7 @@
           },
           {
             "key": "quoteTemplate",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
@@ -645,9 +535,7 @@
           },
           {
             "key": "quotePrompt",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
@@ -655,9 +543,7 @@
           },
           {
             "key": "aiChatVision",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": true,
@@ -666,9 +552,7 @@
           },
           {
             "key": "aiChatReasoning",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": true,
@@ -677,9 +561,7 @@
           },
           {
             "key": "aiChatTopP",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "number",
             "debugLabel": "",
@@ -687,9 +569,7 @@
           },
           {
             "key": "aiChatStopSign",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
@@ -697,9 +577,7 @@
           },
           {
             "key": "aiChatResponseFormat",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
@@ -707,9 +585,7 @@
           },
           {
             "key": "aiChatJsonSchema",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "debugLabel": "",
@@ -717,10 +593,7 @@
           },
           {
             "key": "systemPrompt",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "max": 3000,
             "valueType": "string",
             "label": "common:core.ai.Prompt",
@@ -732,10 +605,7 @@
           },
           {
             "key": "history",
-            "renderTypeList": [
-              "numberInput",
-              "reference"
-            ],
+            "renderTypeList": ["numberInput", "reference"],
             "valueType": "chatHistory",
             "label": "common:core.module.input.label.chat history",
             "description": "workflow:max_dialog_rounds",
@@ -748,51 +618,32 @@
           },
           {
             "key": "quoteQA",
-            "renderTypeList": [
-              "settingDatasetQuotePrompt"
-            ],
+            "renderTypeList": ["settingDatasetQuotePrompt"],
             "label": "",
             "debugLabel": "Knowledge Base Quote",
             "valueType": "datasetQuote",
-            "value": [
-              "iKBoX2vIzETU",
-              "quoteQA"
-            ],
+            "value": ["iKBoX2vIzETU", "quoteQA"],
             "description": "",
             "toolDescription": ""
           },
           {
             "key": "fileUrlList",
-            "renderTypeList": [
-              "reference",
-              "input"
-            ],
+            "renderTypeList": ["reference", "input"],
             "label": "app:workflow.user_file_input",
             "debugLabel": "File Link",
             "description": "app:workflow.user_file_input_desc",
             "valueType": "arrayString",
-            "value": [
-              [
-                "workflowStartNodeId",
-                "userFiles"
-              ]
-            ],
+            "value": [["workflowStartNodeId", "userFiles"]],
             "toolDescription": ""
           },
           {
             "key": "userChatInput",
-            "renderTypeList": [
-              "reference",
-              "textarea"
-            ],
+            "renderTypeList": ["reference", "textarea"],
             "valueType": "string",
             "label": "workflow:user_question",
             "toolDescription": "User's question",
             "required": true,
-            "value": [
-              "workflowStartNodeId",
-              "userChatInput"
-            ],
+            "value": ["workflowStartNodeId", "userChatInput"],
             "debugLabel": ""
           }
         ],
@@ -854,9 +705,7 @@
         "inputs": [
           {
             "key": "ifElseList",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": [
@@ -865,10 +714,7 @@
                 "list": [
                   {
                     "valueType": "input",
-                    "variable": [
-                      "VARIABLE_NODE_ID",
-                      "hTRJXdb1"
-                    ],
+                    "variable": ["VARIABLE_NODE_ID", "hTRJXdb1"],
                     "condition": "isNotEmpty"
                   }
                 ]
@@ -903,19 +749,13 @@
         "inputs": [
           {
             "key": "text",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "valueType": "any",
             "required": true,
             "label": "common:core.module.input.label.Response content",
             "description": "common:core.module.input.description.Response content",
             "placeholder": "common:core.module.input.description.Response content",
-            "value": [
-              "VARIABLE_NODE_ID",
-              "hTRJXdb1"
-            ],
+            "value": ["VARIABLE_NODE_ID", "hTRJXdb1"],
             "selectedTypeIndex": 1,
             "debugLabel": "",
             "toolDescription": ""
@@ -937,9 +777,7 @@
         "inputs": [
           {
             "key": "ifElseList",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": [
@@ -947,10 +785,7 @@
                 "condition": "AND",
                 "list": [
                   {
-                    "variable": [
-                      "VARIABLE_NODE_ID",
-                      "utjZSg8f"
-                    ],
+                    "variable": ["VARIABLE_NODE_ID", "utjZSg8f"],
                     "condition": "equalTo",
                     "value": "llm-summary",
                     "valueType": "input"
@@ -988,9 +823,7 @@
         "inputs": [
           {
             "key": "ifElseList",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": [
@@ -998,10 +831,7 @@
                 "condition": "AND",
                 "list": [
                   {
-                    "variable": [
-                      "VARIABLE_NODE_ID",
-                      "udQRlgfO"
-                    ],
+                    "variable": ["VARIABLE_NODE_ID", "udQRlgfO"],
                     "condition": "isNotEmpty",
                     "valueType": "input"
                   }
@@ -1037,19 +867,13 @@
         "inputs": [
           {
             "key": "text",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "valueType": "any",
             "required": true,
             "label": "common:core.module.input.label.Response content",
             "description": "common:core.module.input.description.Response content",
             "placeholder": "common:core.module.input.description.Response content",
-            "value": [
-              "VARIABLE_NODE_ID",
-              "udQRlgfO"
-            ],
+            "value": ["VARIABLE_NODE_ID", "udQRlgfO"],
             "selectedTypeIndex": 1,
             "debugLabel": "",
             "toolDescription": ""
@@ -1071,9 +895,7 @@
         "inputs": [
           {
             "key": "ifElseList",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "label": "",
             "value": [
@@ -1081,10 +903,7 @@
                 "condition": "AND",
                 "list": [
                   {
-                    "variable": [
-                      "VARIABLE_NODE_ID",
-                      "vKEVhtS6"
-                    ],
+                    "variable": ["VARIABLE_NODE_ID", "vKEVhtS6"],
                     "condition": "equalTo",
                     "value": "useFallbackReply",
                     "valueType": "input"

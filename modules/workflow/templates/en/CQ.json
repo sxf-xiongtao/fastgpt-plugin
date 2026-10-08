@@ -3,9 +3,7 @@
   "intro": "Classifies the user's questions and executes different operations based on question types.",
   "author": "",
   "avatar": "core/workflow/template/questionClassify",
-  "tags": [
-    "office-services"
-  ],
+  "tags": ["office-services"],
   "type": "advanced",
   "workflow": {
     "nodes": [
@@ -37,10 +35,7 @@
         "inputs": [
           {
             "key": "userChatInput",
-            "renderTypeList": [
-              "reference",
-              "textarea"
-            ],
+            "renderTypeList": ["reference", "textarea"],
             "valueType": "string",
             "label": "Question",
             "required": true,
@@ -72,18 +67,13 @@
         "inputs": [
           {
             "key": "modelId",
-            "renderTypeList": [
-              "settingLLMModel",
-              "reference"
-            ],
+            "renderTypeList": ["settingLLMModel", "reference"],
             "label": "core.module.input.label.aiModel",
             "valueType": "string"
           },
           {
             "key": "temperature",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "value": 3,
             "valueType": "number",
@@ -93,9 +83,7 @@
           },
           {
             "key": "maxToken",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "value": 1950,
             "valueType": "number",
@@ -105,35 +93,26 @@
           },
           {
             "key": "isResponseAnswerText",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "value": true,
             "valueType": "boolean"
           },
           {
             "key": "quoteTemplate",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string"
           },
           {
             "key": "quotePrompt",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string"
           },
           {
             "key": "systemPrompt",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "max": 3000,
             "valueType": "string",
             "label": "core.ai.Prompt",
@@ -143,10 +122,7 @@
           },
           {
             "key": "history",
-            "renderTypeList": [
-              "numberInput",
-              "reference"
-            ],
+            "renderTypeList": ["numberInput", "reference"],
             "valueType": "chatHistory",
             "label": "core.module.input.label.chat history",
             "required": true,
@@ -156,32 +132,21 @@
           },
           {
             "key": "userChatInput",
-            "renderTypeList": [
-              "reference",
-              "textarea"
-            ],
+            "renderTypeList": ["reference", "textarea"],
             "valueType": "string",
             "label": "Question",
             "required": true,
             "toolDescription": "Question",
-            "value": [
-              "workflowStartNodeId",
-              "userChatInput"
-            ]
+            "value": ["workflowStartNodeId", "userChatInput"]
           },
           {
             "key": "quoteQA",
-            "renderTypeList": [
-              "settingDatasetQuotePrompt"
-            ],
+            "renderTypeList": ["settingDatasetQuotePrompt"],
             "label": "",
             "debugLabel": "Knowledge base reference",
             "description": "",
             "valueType": "datasetQuote",
-            "value": [
-              "MNMMMIjjWyMU",
-              "quoteQA"
-            ]
+            "value": ["MNMMMIjjWyMU", "quoteQA"]
           }
         ],
         "outputs": [
@@ -218,10 +183,7 @@
         "inputs": [
           {
             "key": "modelId",
-            "renderTypeList": [
-              "selectLLMModel",
-              "reference"
-            ],
+            "renderTypeList": ["selectLLMModel", "reference"],
             "label": "core.module.input.label.aiModel",
             "required": true,
             "valueType": "string",
@@ -229,10 +191,7 @@
           },
           {
             "key": "systemPrompt",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "max": 3000,
             "valueType": "string",
             "label": "core.module.input.label.Background",
@@ -242,10 +201,7 @@
           },
           {
             "key": "history",
-            "renderTypeList": [
-              "numberInput",
-              "reference"
-            ],
+            "renderTypeList": ["numberInput", "reference"],
             "valueType": "chatHistory",
             "label": "core.module.input.label.chat history",
             "required": true,
@@ -255,23 +211,15 @@
           },
           {
             "key": "userChatInput",
-            "renderTypeList": [
-              "reference",
-              "textarea"
-            ],
+            "renderTypeList": ["reference", "textarea"],
             "valueType": "string",
             "label": "Question",
             "required": true,
-            "value": [
-              "workflowStartNodeId",
-              "userChatInput"
-            ]
+            "value": ["workflowStartNodeId", "userChatInput"]
           },
           {
             "key": "agents",
-            "renderTypeList": [
-              "custom"
-            ],
+            "renderTypeList": ["custom"],
             "valueType": "any",
             "label": "",
             "value": [
@@ -314,19 +262,13 @@
         "inputs": [
           {
             "key": "text",
-            "renderTypeList": [
-              "textarea",
-              "reference"
-            ],
+            "renderTypeList": ["textarea", "reference"],
             "valueType": "string",
             "label": "core.module.input.label.Response content",
             "description": "core.module.input.description.Response content",
             "placeholder": "core.module.input.description.Response content",
             "selectedTypeIndex": 1,
-            "value": [
-              "rvbo634w3AYj",
-              "cqResult"
-            ]
+            "value": ["rvbo634w3AYj", "cqResult"]
           }
         ],
         "outputs": []
@@ -346,10 +288,7 @@
         "inputs": [
           {
             "key": "datasets",
-            "renderTypeList": [
-              "selectDataset",
-              "reference"
-            ],
+            "renderTypeList": ["selectDataset", "reference"],
             "label": "core.module.input.label.Select dataset",
             "value": [],
             "valueType": "selectDataset",
@@ -358,80 +297,60 @@
           },
           {
             "key": "similarity",
-            "renderTypeList": [
-              "selectDatasetParamsModal"
-            ],
+            "renderTypeList": ["selectDatasetParamsModal"],
             "label": "",
             "value": 0.4,
             "valueType": "number"
           },
           {
             "key": "limit",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "value": 5000,
             "valueType": "number"
           },
           {
             "key": "searchMode",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": "embedding"
           },
           {
             "key": "usingReRank",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": false
           },
           {
             "key": "datasetSearchUsingExtensionQuery",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "boolean",
             "value": true
           },
           {
             "key": "datasetSearchExtensionModelId",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string"
           },
           {
             "key": "datasetSearchExtensionBg",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "label": "",
             "valueType": "string",
             "value": ""
           },
           {
             "key": "userChatInput",
-            "renderTypeList": [
-              "reference",
-              "textarea"
-            ],
+            "renderTypeList": ["reference", "textarea"],
             "valueType": "string",
             "label": "Question",
             "required": true,
             "toolDescription": "Content to be searched",
-            "value": [
-              "workflowStartNodeId",
-              "userChatInput"
-            ]
+            "value": ["workflowStartNodeId", "userChatInput"]
           }
         ],
         "outputs": [

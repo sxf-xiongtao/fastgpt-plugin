@@ -4,10 +4,7 @@
   "author": "",
   "avatar": "core/app/templates/plugin-feishu",
   "type": "plugin",
-  "tags": [
-    "recommendation",
-    "office-services"
-  ],
+  "tags": ["recommendation", "office-services"],
   "workflow": {
     "nodes": [
       {
@@ -39,9 +36,7 @@
               "valueType": "string",
               "required": true
             },
-            "renderTypeList": [
-              "input"
-            ],
+            "renderTypeList": ["input"],
             "required": true,
             "canEdit": true,
             "value": ""
@@ -50,9 +45,7 @@
             "key": "发送的消息",
             "valueType": "string",
             "label": "Message to send",
-            "renderTypeList": [
-              "reference"
-            ],
+            "renderTypeList": ["reference"],
             "required": true,
             "description": "",
             "canEdit": true,
@@ -114,9 +107,7 @@
         "inputs": [
           {
             "key": "system_addInputParam",
-            "renderTypeList": [
-              "addInputParam"
-            ],
+            "renderTypeList": ["addInputParam"],
             "valueType": "dynamic",
             "label": "",
             "required": false,
@@ -147,9 +138,7 @@
           },
           {
             "key": "system_httpMethod",
-            "renderTypeList": [
-              "custom"
-            ],
+            "renderTypeList": ["custom"],
             "valueType": "string",
             "label": "",
             "value": "POST",
@@ -159,9 +148,7 @@
           },
           {
             "key": "system_httpTimeout",
-            "renderTypeList": [
-              "custom"
-            ],
+            "renderTypeList": ["custom"],
             "valueType": "number",
             "label": "",
             "value": 30,
@@ -173,9 +160,7 @@
           },
           {
             "key": "system_httpReqUrl",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "string",
             "label": "",
             "description": "common:core.module.input.description.Http Request Url",
@@ -187,9 +172,7 @@
           },
           {
             "key": "system_httpHeader",
-            "renderTypeList": [
-              "custom"
-            ],
+            "renderTypeList": ["custom"],
             "valueType": "any",
             "value": [],
             "label": "",
@@ -201,9 +184,7 @@
           },
           {
             "key": "system_httpParams",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "value": [],
             "label": "",
@@ -213,9 +194,7 @@
           },
           {
             "key": "system_httpJsonBody",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "value": "{\r\n    \"msg_type\": \"text\",\r\n    \"content\": {\r\n        \"text\": \"{{text}}\"\r\n    }\r\n}",
             "label": "",
@@ -225,9 +204,7 @@
           },
           {
             "key": "system_httpFormBody",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "any",
             "value": [],
             "label": "",
@@ -237,9 +214,7 @@
           },
           {
             "key": "system_httpContentType",
-            "renderTypeList": [
-              "hidden"
-            ],
+            "renderTypeList": ["hidden"],
             "valueType": "string",
             "value": "json",
             "label": "",
@@ -251,19 +226,14 @@
             "key": "text",
             "valueType": "string",
             "label": "text",
-            "renderTypeList": [
-              "reference"
-            ],
+            "renderTypeList": ["reference"],
             "description": "",
             "canEdit": true,
             "editField": {
               "key": true,
               "valueType": true
             },
-            "value": [
-              "pluginInput",
-              "p0m68Dv5KaIp"
-            ],
+            "value": ["pluginInput", "p0m68Dv5KaIp"],
             "customInputConfig": {
               "selectValueTypeList": [
                 "string",
@@ -290,19 +260,14 @@
             "key": "url",
             "valueType": "string",
             "label": "url",
-            "renderTypeList": [
-              "reference"
-            ],
+            "renderTypeList": ["reference"],
             "description": "",
             "canEdit": true,
             "editField": {
               "key": true,
               "valueType": true
             },
-            "value": [
-              "pluginInput",
-              "mv52BrPVE6bm"
-            ],
+            "value": ["pluginInput", "mv52BrPVE6bm"],
             "customInputConfig": {
               "selectValueTypeList": [
                 "string",
